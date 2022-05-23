@@ -13,7 +13,5 @@
     "es2021": true,
     "node": true
   },
-  "rules": {
-    "no-console": "error"
-  }
+  "rules": { "prettier/prettier": ["error", { "endOfLine": "auto" }] }
 }

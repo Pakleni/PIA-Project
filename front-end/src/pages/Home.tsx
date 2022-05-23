@@ -1,5 +1,5 @@
-import { Typography } from '@material-ui/core';
 import React from 'react';
+import { Typography } from '@mui/material';
 
 const App: React.FC = () => {
   return (
