@@ -7,7 +7,8 @@ import * as Yup from 'yup';
 
 const initialValues = {
   username: '',
-  password: ''
+  password: '',
+  repeat_password: ''
 };
 
 const initialError = {
@@ -44,7 +45,11 @@ const AdminSignup: React.FC = () => {
         onSubmit={onSubmit}
         validationSchema={Yup.object().shape({
           username: Yup.string().required(),
-          password: Yup.string().required()
+          password: Yup.string().required(),
+          repeat_password: Yup.string().oneOf(
+            [Yup.ref('password')],
+            'Passwords must match'
+          )
         })}
       >
         {({ isSubmitting }) => (
@@ -64,6 +69,13 @@ const AdminSignup: React.FC = () => {
               </Grid>
               <Grid item>
                 <InputField name="password" label="Password" type="password" />
+              </Grid>
+              <Grid item>
+                <InputField
+                  name="repeat_password"
+                  label="Repeat Password"
+                  type="password"
+                />
               </Grid>
               <Grid item>
                 <Button disabled={isSubmitting} type="submit">
