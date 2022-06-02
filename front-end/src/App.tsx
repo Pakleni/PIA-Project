@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { User } from './types/User';
 import { login } from './api/user';
+import AdminSignup from './pages/AdminSignup';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -46,6 +47,7 @@ const App: React.FC = () => {
           Log Out
         </Button>
         <Switch>
+          <Route exact path="/admin/signup" component={AdminSignup} />
           {/* so route needs to be fluid with user type */}
           {user ? (
             user.type === 'Admin' ? (
@@ -64,6 +66,7 @@ const App: React.FC = () => {
               />
             </>
           )}
+
           <Route component={Page404} />
         </Switch>
       </ThemeProvider>
