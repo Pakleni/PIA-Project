@@ -48,7 +48,6 @@ export const register_admin = async (
 export const register_user = async (data: {
   username: string;
   password: string;
-  repeat_password: string;
   ime: string;
   prezime: string;
   telefon: string;
@@ -90,6 +89,43 @@ export const change_password = async (
       password,
       new_password
     })
+  });
+
+  if (!response.ok) {
+    const body = await response.json();
+    throw body.message;
+  }
+};
+
+export const register_corp = async (data: {
+  username: string;
+  password: string;
+  ime: string;
+  prezime: string;
+  telefon: string;
+  email: string;
+  naziv: string;
+  adresa: string;
+  pib: string;
+  maticni_broj: string;
+}): Promise<void> => {
+  const user = localStorage.getItem('user');
+
+  const response = await fetch(getBaseUrl() + '/korisnik/corp/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(
+      user
+        ? {
+            user: JSON.parse(user),
+            data
+          }
+        : {
+            data
+          }
+    )
   });
 
   if (!response.ok) {

@@ -14,6 +14,7 @@ import { login } from './api/user';
 import AdminSignup from './pages/AdminSignup';
 import ChangePassword from './pages/ChangePassword';
 import UserSignup from './pages/UserSignup';
+import CorpSignup from './pages/CorpSignup';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -65,6 +66,7 @@ const App: React.FC = () => {
                 <>
                   {/* Admin routes */}
                   <Route exact path="/user/signup" component={UserSignup} />
+                  <Route exact path="/corp/signup" component={CorpSignup} />
                 </>
               ) : user.type === 'Buyer' ? (
                 <>{/* Buyer routes */}</>
@@ -79,6 +81,7 @@ const App: React.FC = () => {
                 path="/"
                 component={() => <FrontPage setUser={setUser} />}
               />
+              <Route exact path="/corp/signup" component={CorpSignup} />
             </>
           )}
 
