@@ -37,6 +37,35 @@ export class KorisnikController {
       console.log("[server] " + e);
     }
   };
+  corp_signup = async (req: express.Request, res: express.Response) => {
+    try {
+      const { user, data } = req.body;
+
+      if (user) {
+        const admin = await Korisnik.findOne({
+          username: user.username,
+          password: user.password,
+          type: "Admin",
+        });
+        if (admin) {
+          try {
+            await new Korisnik({ ...data, type: "Company" }).save();
+            return res.status(200).json({ message: "Success!" });
+          } catch (e) {
+            //TODO {Add correct errors to endpoints}
+            return res.status(400).json({ message: "failed" });
+          }
+        } else {
+          return res.status(403).json({ message: "failed admin" });
+        }
+      } else {
+        //TODO
+        return res.status(403).json({ message: "not implemented" });
+      }
+    } catch (e) {
+      console.log("[server] " + e);
+    }
+  };
   admin_signup = async (req: express.Request, res: express.Response) => {
     try {
       const { username, password } = req.body;
