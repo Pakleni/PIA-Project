@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import korisnikRouter from "./routers/korisnik.routes";
 
 const app = express();
 app.use(cors());
@@ -29,8 +30,11 @@ process.on("SIGINT", function () {
   });
 });
 
-// ROUTER
-app.get("/", (req, res) => res.send("Hello!"));
+const router = express.Router();
+router.use("/korisnik", korisnikRouter);
+
+app.use("/", router);
+
 app.listen(4000, () =>
   console.log(`[server] Express server running on port 4000`)
 );

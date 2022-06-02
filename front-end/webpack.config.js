@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -31,6 +32,9 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.API_URL': JSON.stringify('http://localhost:4000')
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/index.html')
     })
