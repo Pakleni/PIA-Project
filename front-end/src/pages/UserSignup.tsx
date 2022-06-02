@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import InputField from '../components/form-comps/InputField';
-import { register_admin } from '../api/user';
+import { register_user } from '../api/user';
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import * as Yup from 'yup';
 
 const initialValues = {
   username: '',
   password: '',
-  repeat_password: ''
+  repeat_password: '',
+  ime: '',
+  prezime: '',
+  telefon: '',
+  broj_lk: ''
 };
 
 const initialError = {
@@ -16,16 +20,16 @@ const initialError = {
   message: ''
 };
 
-const AdminSignup: React.FC = () => {
+const UserSignup: React.FC = () => {
   const [message, setMessage] = useState({
     error: false,
     message: ''
   });
 
-  const onSubmit = async ({ username, password }: typeof initialValues) => {
+  const onSubmit = async (data: typeof initialValues) => {
     setMessage(initialError);
     try {
-      await register_admin(username, password);
+      await register_user(data);
       setMessage({
         error: false,
         message: 'Success!'
@@ -49,7 +53,19 @@ const AdminSignup: React.FC = () => {
           repeat_password: Yup.string().oneOf(
             [Yup.ref('password')],
             'Passwords must match'
-          )
+          ),
+          ime: Yup.string().required(),
+          prezime: Yup.string().required(),
+          telefon: Yup.string()
+            .required()
+            .matches(/^[0-9]+$/, 'Must be only digits')
+            .min(8, 'Not less than 8 digits')
+            .max(9, 'Not more than 9 digits'),
+          broj_lk: Yup.string()
+            .required()
+            .matches(/^[0-9]+$/, 'Must be only digits')
+            .min(13, 'Must be exactly 13 digits')
+            .max(13, 'Must be exactly 13 digits')
         })}
       >
         {({ isSubmitting }) => (
@@ -62,7 +78,7 @@ const AdminSignup: React.FC = () => {
               spacing={2}
             >
               <Grid item>
-                <Typography variant="h3">Register Admin</Typography>
+                <Typography variant="h3">Register User</Typography>
               </Grid>
               <Grid item>
                 <InputField name="username" label="Username" />
@@ -77,6 +93,23 @@ const AdminSignup: React.FC = () => {
                   type="password"
                 />
               </Grid>
+              <Grid item>
+                <InputField name="ime" label="Ime" />
+              </Grid>
+              <Grid item>
+                <InputField name="prezime" label="Prezime" />
+              </Grid>
+              <Grid item>
+                <InputField
+                  name="telefon"
+                  label="Telefon"
+                  startAdornment="+381"
+                />
+              </Grid>
+              <Grid item>
+                <InputField name="broj_lk" label="Broj Licne" />
+              </Grid>
+
               <Grid item>
                 <Button disabled={isSubmitting} type="submit">
                   {isSubmitting ? <CircularProgress /> : 'Submit'}
@@ -97,4 +130,4 @@ const AdminSignup: React.FC = () => {
   );
 };
 
-export default AdminSignup;
+export default UserSignup;

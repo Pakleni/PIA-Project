@@ -5,10 +5,33 @@ export class KorisnikController {
   login = async (req: express.Request, res: express.Response) => {
     try {
       const { username, password } = req.body;
-      const korisnik = await Korisnik.find({ username, password });
+      const korisnik = await Korisnik.findOne({ username, password });
 
-      if (korisnik[0]) return res.status(200).json(korisnik[0]);
+      if (korisnik) return res.status(200).json(korisnik);
       else return res.sendStatus(401);
+    } catch (e) {
+      console.log("[server] " + e);
+    }
+  };
+  user_signup = async (req: express.Request, res: express.Response) => {
+    try {
+      const { user, data } = req.body;
+
+      const admin = await Korisnik.findOne({
+        username: user.username,
+        password: user.password,
+        type: "Admin",
+      });
+      if (admin)
+        try {
+          await new Korisnik({ ...data, type: "Buyer" }).save();
+          return res.status(200).json({ message: "success" });
+        } catch (e) {
+          return res.status(400).json({ message: "failed" });
+        }
+      else {
+        return res.status(403).json({ message: "not logged in" });
+      }
     } catch (e) {
       console.log("[server] " + e);
     }
