@@ -25,8 +25,9 @@ export class KorisnikController {
       if (admin)
         try {
           await new Korisnik({ ...data, type: "Buyer" }).save();
-          return res.status(200).json({ message: "success" });
+          return res.status(200).json({ message: "Success!" });
         } catch (e) {
+          //TODO {Add correct errors to endpoints}
           return res.status(400).json({ message: "failed" });
         }
       else {
@@ -41,8 +42,9 @@ export class KorisnikController {
       const { username, password } = req.body;
       try {
         await new Korisnik({ username, password, type: "Admin" }).save();
-        return res.status(200).json({ message: "success" });
+        return res.status(200).json({ message: "Success!" });
       } catch (e) {
+        //TODO {Add correct errors to endpoints}
         return res.status(400).json({ message: "failed" });
       }
     } catch (e) {
@@ -60,9 +62,9 @@ export class KorisnikController {
         { password: new_password }
       );
       if (korisnik) {
-        return res.status(200).json({ message: "success" });
+        return res.status(200).json({ message: "Success!" });
       } else {
-        return res.status(400).json({ message: "failed" });
+        return res.status(400).json({ message: "Wrong password" });
       }
     } catch (e) {
       console.log("[server] " + e);
