@@ -11,4 +11,7 @@ korinsikRouter
   .route("/admin/signup")
   .post((req, res) => new KorisnikController().admin_signup(req, res));
 
+korinsikRouter
+  .route("/change-password")
+  .post((req, res) => new KorisnikController().change_password(req, res));
 export default korinsikRouter;

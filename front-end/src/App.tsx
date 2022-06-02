@@ -12,6 +12,7 @@ import {
 import { User } from './types/User';
 import { login } from './api/user';
 import AdminSignup from './pages/AdminSignup';
+import ChangePassword from './pages/ChangePassword';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -25,8 +26,13 @@ const App: React.FC = () => {
     username: string;
     password: string;
   }) => {
-    const response = await login(username, password);
-    setUser(response);
+    try {
+      const response = await login(username, password);
+      setUser(response);
+    } catch (e) {
+      localStorage.removeItem('user');
+      setUser(undefined);
+    }
   };
 
   useEffect(() => {
@@ -34,29 +40,34 @@ const App: React.FC = () => {
     storageUser && loginOnLoad(JSON.parse(storageUser));
   }, []);
 
+  const Logout = () => {
+    localStorage.removeItem('user');
+    setUser(undefined);
+  };
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Button
-          onClick={() => {
-            localStorage.removeItem('user');
-            setUser(undefined);
-          }}
-        >
-          Log Out
-        </Button>
+        <Button onClick={Logout}>Log Out</Button>
         <Switch>
           <Route exact path="/admin/signup" component={AdminSignup} />
           {/* so route needs to be fluid with user type */}
           {user ? (
-            user.type === 'Admin' ? (
-              <>{/* Admin routes */}</>
-            ) : user.type === 'Buyer' ? (
-              <>{/* Buyer routes */}</>
-            ) : (
-              <>{/* Corporation routes */}</>
-            )
+            <>
+              <Route
+                exact
+                path="/change-password"
+                component={() => <ChangePassword user={user} Logout={Logout} />}
+              />
+              {user.type === 'Admin' ? (
+                <>{/* Admin routes */}</>
+              ) : user.type === 'Buyer' ? (
+                <>{/* Buyer routes */}</>
+              ) : (
+                <>{/* Corporation routes */}</>
+              )}
+            </>
           ) : (
             <>
               <Route

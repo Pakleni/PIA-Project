@@ -5,6 +5,7 @@ import React from 'react';
 interface InputFieldProps {
   name: string;
   label: string;
+  disabled?: boolean;
   type?: 'text' | 'number' | 'password';
 }
 

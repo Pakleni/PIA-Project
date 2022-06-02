@@ -9,7 +9,7 @@ interface IKorisnik {
 }
 
 const korisnikSchema = new Schema<IKorisnik>({
-  username: { type: String, required: true },
+  username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   type: { type: String, required: true },
 });

@@ -44,3 +44,26 @@ export const register = async (
     throw body.message;
   }
 };
+
+export const change_password = async (
+  username: string,
+  password: string,
+  new_password: string
+): Promise<void> => {
+  const response = await fetch(getBaseUrl() + '/korisnik/change-password', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      username,
+      password,
+      new_password
+    })
+  });
+
+  if (!response.ok) {
+    const body = await response.json();
+    throw body.message;
+  }
+};
