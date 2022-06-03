@@ -1,5 +1,7 @@
 import express from "express";
+import mongoose from "mongoose";
 import Korisnik from "../models/korisnik";
+import Zahtev from "../models/zahtev";
 
 export class KorisnikController {
   login = async (req: express.Request, res: express.Response) => {
@@ -59,8 +61,40 @@ export class KorisnikController {
           return res.status(403).json({ message: "failed admin" });
         }
       } else {
-        //TODO
-        return res.status(403).json({ message: "not implemented" });
+        const session = await mongoose.startSession();
+        try {
+          let response = {
+            status: 400,
+            message: "Error!",
+          };
+          await session.withTransaction(async () => {
+            if (await Korisnik.findOne({ username: data.username })) {
+              response = {
+                status: 400,
+                message: "Username already exists!",
+              };
+            } else if (await Korisnik.findOne({ email: data.email })) {
+              response = {
+                status: 400,
+                message: "Email already exists!",
+              };
+            } else {
+              await new Zahtev(data).save();
+              response = {
+                status: 200,
+                message: "Success!",
+              };
+            }
+          });
+          return res
+            .status(response.status)
+            .json({ message: response.message });
+        } catch (e) {
+          //TODO {Add correct errors to endpoints}
+          return res.status(400).json({ message: e.toString() });
+        } finally {
+          await session.endSession();
+        }
       }
     } catch (e) {
       console.log("[server] " + e);
