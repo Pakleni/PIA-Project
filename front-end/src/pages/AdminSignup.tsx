@@ -4,6 +4,7 @@ import InputField from '../components/form-comps/InputField';
 import { register_admin } from '../api/user';
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import * as Yup from 'yup';
+import { validatePassword } from '../utils/yup-helpers';
 
 const initialValues = {
   username: '',
@@ -45,7 +46,7 @@ const AdminSignup: React.FC = () => {
         onSubmit={onSubmit}
         validationSchema={Yup.object().shape({
           username: Yup.string().required(),
-          password: Yup.string().required(),
+          password: validatePassword,
           repeat_password: Yup.string().oneOf(
             [Yup.ref('password')],
             'Passwords must match'

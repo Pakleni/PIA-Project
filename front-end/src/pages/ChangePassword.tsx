@@ -6,6 +6,7 @@ import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import { User } from '../types/User';
+import { validatePassword } from '../utils/yup-helpers';
 
 const initialError = {
   error: false,
@@ -60,7 +61,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ user, Logout }) => {
         onSubmit={onSubmit}
         validationSchema={Yup.object().shape({
           username: Yup.string().required(),
-          password: Yup.string().required(),
+          password: validatePassword,
           new_password: Yup.string().required(),
           repeat_password: Yup.string().oneOf(
             [Yup.ref('new_password')],
