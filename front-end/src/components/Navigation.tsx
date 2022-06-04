@@ -35,6 +35,10 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
     {
       label: 'User Signup',
       link: '/user/signup'
+    },
+    {
+      label: 'Requests',
+      link: '/requests'
     }
   ];
   const notLoggedPages: {

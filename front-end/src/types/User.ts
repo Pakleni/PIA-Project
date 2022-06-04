@@ -5,17 +5,19 @@ export interface User {
 }
 
 export interface Buyer extends User {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  idNumber: string;
+  ime: string;
+  prezime: string;
+  telefon: string;
+  broj_lk: string;
 }
 
 export interface Company extends User {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
+  ime: string;
+  prezime: string;
+  telefon: string;
   email: string;
-  name: string;
-  //TODO...
+  naziv: string;
+  adresa: string;
+  pib: string;
+  maticni_broj: string;
 }

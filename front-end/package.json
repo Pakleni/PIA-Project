@@ -13,6 +13,7 @@
     "@babel/eslint-parser": "^7.16.5",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@material-table/core": "^0.2.34",
     "@mui/icons-material": "^5.8.0",
     "@mui/material": "^5.8.0",
     "@types/react-router-dom": "^5.1.8",

@@ -3,7 +3,6 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import FrontPage from './pages/FrontPage';
 import Page404 from './pages/404';
 import {
-  Button,
   createTheme,
   CssBaseline,
   responsiveFontSizes,
@@ -16,6 +15,7 @@ import ChangePassword from './pages/ChangePassword';
 import UserSignup from './pages/UserSignup';
 import CorpSignup from './pages/CorpSignup';
 import NavigationBar from './components/Navigation';
+import Requests from './pages/Requests';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -70,6 +70,7 @@ const App: React.FC = () => {
                   {/* Admin routes */}
                   <Route exact path="/user/signup" component={UserSignup} />
                   <Route exact path="/corp/signup" component={CorpSignup} />
+                  <Route exact path="/requests" component={Requests} />
                 </>
               ) : user.type === 'Buyer' ? (
                 <>{/* Buyer routes */}</>

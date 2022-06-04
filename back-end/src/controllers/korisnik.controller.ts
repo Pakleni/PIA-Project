@@ -13,6 +13,7 @@ export class KorisnikController {
       else return res.sendStatus(401);
     } catch (e) {
       console.log("[server] " + e);
+      return res.status(400).json({ message: "failed" });
     }
   };
   user_signup = async (req: express.Request, res: express.Response) => {
@@ -37,6 +38,7 @@ export class KorisnikController {
       }
     } catch (e) {
       console.log("[server] " + e);
+      return res.status(400).json({ message: "failed" });
     }
   };
   corp_signup = async (req: express.Request, res: express.Response) => {
@@ -98,6 +100,7 @@ export class KorisnikController {
       }
     } catch (e) {
       console.log("[server] " + e);
+      return res.status(400).json({ message: "failed" });
     }
   };
   admin_signup = async (req: express.Request, res: express.Response) => {
@@ -112,6 +115,7 @@ export class KorisnikController {
       }
     } catch (e) {
       console.log("[server] " + e);
+      return res.status(400).json({ message: "failed" });
     }
   };
   change_password = async (req: express.Request, res: express.Response) => {
@@ -131,6 +135,7 @@ export class KorisnikController {
       }
     } catch (e) {
       console.log("[server] " + e);
+      return res.status(400).json({ message: "failed" });
     }
   };
 }
