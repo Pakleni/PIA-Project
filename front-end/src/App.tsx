@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import FrontPage from './pages/FrontPage';
 import Page404 from './pages/404';
 import {
@@ -15,11 +15,13 @@ import AdminSignup from './pages/AdminSignup';
 import ChangePassword from './pages/ChangePassword';
 import UserSignup from './pages/UserSignup';
 import CorpSignup from './pages/CorpSignup';
+import NavigationBar from './components/Navigation';
 
 const theme = responsiveFontSizes(createTheme({}));
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User>();
+  const history = useHistory();
 
   const loginOnLoad = async ({
     username,
@@ -45,13 +47,14 @@ const App: React.FC = () => {
   const Logout = () => {
     localStorage.removeItem('user');
     setUser(undefined);
+    history.push('/');
   };
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Button onClick={Logout}>Log Out</Button>
+        <NavigationBar Logout={Logout} user={user} />
         <Switch>
           <Route exact path="/admin/signup" component={AdminSignup} />
           {/* so route needs to be fluid with user type */}
