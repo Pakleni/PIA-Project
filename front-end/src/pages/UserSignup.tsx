@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import InputField from '../components/form-comps/InputField';
 import { register_user } from '../api/user';
-import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Grid,
+  Typography
+} from '@mui/material';
 import * as Yup from 'yup';
 import { validatePassword } from '../utils/yup-helpers';
 
@@ -71,59 +78,58 @@ const UserSignup: React.FC = () => {
       >
         {({ isSubmitting }) => (
           <Form>
-            <Grid
-              container
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-              spacing={2}
-            >
-              <Grid item>
-                <Typography variant="h3">Register User</Typography>
-              </Grid>
-              <Grid item>
-                <InputField name="username" label="Username" />
-              </Grid>
-              <Grid item>
-                <InputField name="password" label="Password" type="password" />
-              </Grid>
-              <Grid item>
-                <InputField
-                  name="repeat_password"
-                  label="Repeat Password"
-                  type="password"
-                />
-              </Grid>
-              <Grid item>
-                <InputField name="ime" label="Ime" />
-              </Grid>
-              <Grid item>
-                <InputField name="prezime" label="Prezime" />
-              </Grid>
-              <Grid item>
-                <InputField
-                  name="telefon"
-                  label="Telefon"
-                  startAdornment="+381"
-                />
-              </Grid>
-              <Grid item>
-                <InputField name="broj_lk" label="Broj Licne" />
-              </Grid>
-
-              <Grid item>
-                <Button disabled={isSubmitting} type="submit">
-                  {isSubmitting ? <CircularProgress /> : 'Submit'}
-                </Button>
-              </Grid>
-              {message && !isSubmitting && (
-                <Grid item>
-                  <Typography color={message.error ? 'error' : 'green'}>
-                    {message.message}
-                  </Typography>
+            <Container maxWidth="sm">
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Typography variant="h3">Register User</Typography>
                 </Grid>
-              )}
-            </Grid>
+                <Grid item xs={12}>
+                  <InputField name="username" label="Username" />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputField
+                    name="password"
+                    label="Password"
+                    type="password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputField
+                    name="repeat_password"
+                    label="Repeat Password"
+                    type="password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputField name="ime" label="Ime" />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputField name="prezime" label="Prezime" />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputField
+                    name="telefon"
+                    label="Telefon"
+                    startAdornment="+381"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputField name="broj_lk" label="Broj Licne" />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button disabled={isSubmitting} type="submit">
+                    {isSubmitting ? <CircularProgress /> : 'Submit'}
+                  </Button>
+                </Grid>
+                {message && !isSubmitting && (
+                  <Grid item xs={12}>
+                    <Typography color={message.error ? 'error' : 'green'}>
+                      {message.message}
+                    </Typography>
+                  </Grid>
+                )}
+              </Grid>
+            </Container>
           </Form>
         )}
       </Formik>

@@ -22,6 +22,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
     <TextField
       {...field}
       {...rest}
+      fullWidth
       helperText={touched ? error : undefined}
       error={touched && !!error}
       InputProps={{

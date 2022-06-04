@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import InputField from '../components/form-comps/InputField';
 import { login } from '../api/user';
-import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Grid,
+  Typography
+} from '@mui/material';
 import { User } from '../types/User';
 import * as Yup from 'yup';
 
@@ -41,30 +48,35 @@ const FrontPage: React.FC<FrontPageProps> = ({ setUser }) => {
       >
         {({ isSubmitting }) => (
           <Form>
-            <Grid
-              container
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-              spacing={2}
-            >
-              <Grid item>
-                <InputField name="username" label="Username" />
-              </Grid>
-              <Grid item>
-                <InputField name="password" label="Password" type="password" />
-              </Grid>
-              <Grid item>
-                <Button disabled={isSubmitting} type="submit">
-                  {isSubmitting ? <CircularProgress /> : 'Submit'}
-                </Button>
-              </Grid>
-              {error && !isSubmitting && (
-                <Grid item>
-                  <Typography color="error">Wrong username/password</Typography>
+            <Container maxWidth="xs">
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Typography variant="h3">Login</Typography>
                 </Grid>
-              )}
-            </Grid>
+                <Grid item xs={12}>
+                  <InputField name="username" label="Username" />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputField
+                    name="password"
+                    label="Password"
+                    type="password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button disabled={isSubmitting} type="submit">
+                    {isSubmitting ? <CircularProgress /> : 'Submit'}
+                  </Button>
+                </Grid>
+                {error && !isSubmitting && (
+                  <Grid item xs={12}>
+                    <Typography color="error">
+                      Wrong username/password
+                    </Typography>
+                  </Grid>
+                )}
+              </Grid>
+            </Container>
           </Form>
         )}
       </Formik>
