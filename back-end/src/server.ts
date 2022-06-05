@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import korisnikRouter from "./routers/korisnik.routes";
 import zahtevRouter from "./routers/zahtev.routes";
+import artikalRouter from "./routers/artikal.routes";
 
 const app = express();
 app.use(cors());
@@ -34,6 +35,7 @@ process.on("SIGINT", function () {
 const router = express.Router();
 router.use("/korisnik", korisnikRouter);
 router.use("/zahtev", zahtevRouter);
+router.use("/artikal", artikalRouter);
 
 app.use("/", router);
 
