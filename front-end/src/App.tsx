@@ -23,7 +23,7 @@ import CorpSignup from './pages/CorpSignup';
 import NavigationBar from './components/Navigation';
 import Requests from './pages/Requests';
 import CorpAddInfo from './pages/CorpAddInfo';
-import CreateArticles from './pages/articles/create';
+import ArticlesPage from './pages/articles';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -96,8 +96,8 @@ const App: React.FC = () => {
   const corpPages: RouteProps[] = [
     {
       exact: true,
-      path: '/articles/create',
-      component: () => <CreateArticles user={user as User} />
+      path: '/articles',
+      component: () => <ArticlesPage user={user as User} />
     }
   ];
 

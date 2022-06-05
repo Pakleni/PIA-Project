@@ -16,6 +16,7 @@ interface IArtikal {
   sifra: string;
   naziv: string;
   jedinica: string;
+  stopa: string;
   tip?: string;
   poreklo?: string;
   strani_naziv?: string;
@@ -49,6 +50,7 @@ const artikalSchema = new Schema<IArtikal>({
   tip: { type: String, sparse: true },
   poreklo: { type: String, sparse: true },
   strani_naziv: { type: String, sparse: true },
+  stopa: { type: String, sparse: true },
   barkod: { type: String, sparse: true },
   proizvodjac: { type: String, sparse: true },
   tarifa: { type: String, sparse: true },
