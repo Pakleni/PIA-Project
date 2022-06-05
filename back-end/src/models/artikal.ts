@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 
 interface ICeneStanje {
   magacin_id: string;
-  nabavna_cena: string;
-  prodajna_cena: string;
-  stanje: string;
-  min_zalihe: string;
-  max_zalihe: string;
+  nabavna_cena: number;
+  prodajna_cena: number;
+  stanje: number;
+  min_zalihe: number;
+  max_zalihe: number;
 }
 
 interface IArtikal {
@@ -25,8 +25,8 @@ interface IArtikal {
   tarifa?: string;
   eko_taksa: boolean;
   akcize: boolean;
-  min_zalihe?: string;
-  max_zalihe?: string;
+  min_zalihe?: number;
+  max_zalihe?: number;
   opis?: string;
   deklaracija?: string;
   cene_stanje: ICeneStanje[];
@@ -35,11 +35,11 @@ interface IArtikal {
 
 const ceneStanjeSchema = new Schema<ICeneStanje>({
   magacin_id: { type: String, required: true },
-  nabavna_cena: { type: String, required: true },
-  prodajna_cena: { type: String, required: true },
-  stanje: { type: String, required: true },
-  min_zalihe: { type: String, required: true },
-  max_zalihe: { type: String, required: true },
+  nabavna_cena: { type: Number, required: true },
+  prodajna_cena: { type: Number, required: true },
+  stanje: { type: Number, required: true },
+  min_zalihe: { type: Number, required: true },
+  max_zalihe: { type: Number, required: true },
 });
 
 const artikalSchema = new Schema<IArtikal>({
@@ -56,8 +56,8 @@ const artikalSchema = new Schema<IArtikal>({
   tarifa: { type: String, sparse: true },
   eko_taksa: { type: Boolean, sparse: true },
   akcize: { type: Boolean, sparse: true },
-  min_zalihe: { type: String, sparse: true },
-  max_zalihe: { type: String, sparse: true },
+  min_zalihe: { type: Number, sparse: true },
+  max_zalihe: { type: Number, sparse: true },
   opis: { type: String, sparse: true },
   deklaracija: { type: String, sparse: true },
   cene_stanje: { type: [ceneStanjeSchema], required: true },

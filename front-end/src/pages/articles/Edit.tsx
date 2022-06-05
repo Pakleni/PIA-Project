@@ -107,13 +107,19 @@ const EditArticles: React.FC<EditArticlesProps> = ({ user, article }) => {
               Yup.object().shape({
                 poreklo: Yup.string(),
                 strani_naziv: Yup.string(),
-                barkod: Yup.string(),
+                barkod: Yup.string().matches(/^[0-9]+$/, 'Must be only digits'),
                 proizvodjac: Yup.string(),
                 tarifa: Yup.string(),
                 eko_taksa: Yup.boolean(),
                 akcize: Yup.boolean(),
-                min_zalihe: Yup.string(),
-                max_zalihe: Yup.string(),
+                min_zalihe: Yup.string().matches(
+                  /^[0-9]+$/,
+                  'Must be only digits'
+                ),
+                max_zalihe: Yup.string().matches(
+                  /^[0-9]+$/,
+                  'Must be only digits'
+                ),
                 opis: Yup.string(),
                 deklaracija: Yup.string()
               }),
@@ -124,9 +130,15 @@ const EditArticles: React.FC<EditArticlesProps> = ({ user, article }) => {
                       magacin_id: Yup.string().required(),
                       nabavna_cena: Yup.string().required(),
                       prodajna_cena: Yup.string().required(),
-                      stanje: Yup.string().required(),
-                      min_zalihe: Yup.string().required(),
-                      max_zalihe: Yup.string().required()
+                      stanje: Yup.string()
+                        .matches(/^[0-9]+$/, 'Must be only digits')
+                        .required(),
+                      min_zalihe: Yup.string()
+                        .matches(/^[0-9]+$/, 'Must be only digits')
+                        .required(),
+                      max_zalihe: Yup.string()
+                        .matches(/^[0-9]+$/, 'Must be only digits')
+                        .required()
                     })
                   )
                   .required()

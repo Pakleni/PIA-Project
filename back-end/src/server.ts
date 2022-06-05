@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import korisnikRouter from "./routers/korisnik.routes";
 import zahtevRouter from "./routers/zahtev.routes";
 import artikalRouter from "./routers/artikal.routes";
+import racunRouter from "./routers/racun.routes";
 
 const app = express();
 app.use(cors());
@@ -36,6 +37,7 @@ const router = express.Router();
 router.use("/korisnik", korisnikRouter);
 router.use("/zahtev", zahtevRouter);
 router.use("/artikal", artikalRouter);
+router.use("/racun", racunRouter);
 
 app.use("/", router);
 
