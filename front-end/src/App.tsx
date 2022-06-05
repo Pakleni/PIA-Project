@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import {
+  Route,
+  RouteProps,
+  Switch,
+  useHistory,
+  useLocation
+} from 'react-router-dom';
 import FrontPage from './pages/FrontPage';
 import Page404 from './pages/404';
 import {
@@ -16,33 +22,33 @@ import UserSignup from './pages/UserSignup';
 import CorpSignup from './pages/CorpSignup';
 import NavigationBar from './components/Navigation';
 import Requests from './pages/Requests';
+import CorpAddInfo from './pages/CorpAddInfo';
 
 const theme = responsiveFontSizes(createTheme({}));
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User>();
   const history = useHistory();
-
-  const loginOnLoad = async ({
-    username,
-    password
-  }: {
-    username: string;
-    password: string;
-  }) => {
-    try {
-      const response = await login(username, password);
-      setUser(response);
-    } catch (e) {
-      localStorage.removeItem('user');
-      setUser(undefined);
-    }
-  };
+  const location = useLocation();
 
   useEffect(() => {
-    const storageUser = localStorage.getItem('user');
-    storageUser && loginOnLoad(JSON.parse(storageUser));
+    Login();
   }, []);
+
+  const Login = async () => {
+    const storageUser = localStorage.getItem('user');
+    if (storageUser) {
+      const { username, password } = JSON.parse(storageUser);
+
+      try {
+        const response = await login(username, password);
+        setUser(response);
+      } catch (e) {
+        localStorage.removeItem('user');
+        setUser(undefined);
+      }
+    }
+  };
 
   const Logout = () => {
     localStorage.removeItem('user');
@@ -50,46 +56,81 @@ const App: React.FC = () => {
     history.push('/');
   };
 
+  useEffect(() => {
+    if (
+      user?.type === 'Company' &&
+      !user?.kategorija &&
+      location.pathname != '/new-company'
+    ) {
+      history.push('/new-company');
+    }
+  }, [user, location]);
+
+  const adminPages: RouteProps[] = [
+    {
+      exact: true,
+      path: '/user/signup',
+      component: UserSignup
+    },
+    {
+      exact: true,
+      path: '/corp/signup',
+      component: CorpSignup
+    },
+    {
+      exact: true,
+      path: '/requests',
+      component: Requests
+    }
+  ];
+
+  const newCorpPages: RouteProps[] = [
+    {
+      exact: true,
+      path: '/new-company',
+      component: () => <CorpAddInfo user={user as User} Login={Login} />
+    }
+  ];
+
+  const corpPages: RouteProps[] = [];
+
+  const buyerPages: RouteProps[] = [];
+
+  const pages: RouteProps[] = [
+    ...(user
+      ? [
+          {
+            path: '/change-password',
+            component: () => <ChangePassword user={user} Logout={Logout} />
+          },
+          ...(user.type === 'Admin'
+            ? adminPages
+            : user.type === 'Company'
+            ? user.kategorija
+              ? corpPages
+              : newCorpPages
+            : buyerPages)
+        ]
+      : [
+          {
+            exact: true,
+            path: '/',
+            component: () => <FrontPage setUser={setUser} />
+          },
+          { exact: true, path: '/corp/signup', component: CorpSignup }
+        ]),
+    { exact: true, path: '/admin/signup', component: AdminSignup },
+    { component: Page404 }
+  ];
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <NavigationBar Logout={Logout} user={user} />
         <Switch>
-          <Route exact path="/admin/signup" component={AdminSignup} />
-          {/* so route needs to be fluid with user type */}
-          {user ? (
-            <>
-              <Route
-                exact
-                path="/change-password"
-                component={() => <ChangePassword user={user} Logout={Logout} />}
-              />
-              {user.type === 'Admin' ? (
-                <>
-                  {/* Admin routes */}
-                  <Route exact path="/user/signup" component={UserSignup} />
-                  <Route exact path="/corp/signup" component={CorpSignup} />
-                  <Route exact path="/requests" component={Requests} />
-                </>
-              ) : user.type === 'Buyer' ? (
-                <>{/* Buyer routes */}</>
-              ) : (
-                <>{/* Corporation routes */}</>
-              )}
-            </>
-          ) : (
-            <>
-              <Route
-                exact
-                path="/"
-                component={() => <FrontPage setUser={setUser} />}
-              />
-              <Route exact path="/corp/signup" component={CorpSignup} />
-            </>
-          )}
-
-          <Route component={Page404} />
+          {pages.map((x, i) => (
+            <Route key={i} {...x} />
+          ))}
         </Switch>
       </ThemeProvider>
     </>

@@ -22,4 +22,8 @@ korinsikRouter
 korinsikRouter
   .route("/change-password")
   .post((req, res) => new KorisnikController().change_password(req, res));
+
+korinsikRouter
+  .route("/corp")
+  .post((req, res) => new KorisnikController().edit_corp(req, res));
 export default korinsikRouter;

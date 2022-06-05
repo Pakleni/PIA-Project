@@ -138,4 +138,25 @@ export class KorisnikController {
       return res.status(400).json({ message: "failed" });
     }
   };
+
+  edit_corp = async (req: express.Request, res: express.Response) => {
+    try {
+      const { _id, data } = req.body;
+      const korisnik = await Korisnik.findOneAndUpdate(
+        {
+          _id,
+          type: "Company",
+        },
+        data
+      );
+      if (korisnik) {
+        return res.status(200).json({ message: "Success!" });
+      } else {
+        return res.status(400).json({ message: "Error" });
+      }
+    } catch (e) {
+      console.log("[server] " + e);
+      return res.status(400).json({ message: "failed" });
+    }
+  };
 }

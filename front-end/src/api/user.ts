@@ -133,3 +133,40 @@ export const register_corp = async (data: {
     throw body.message;
   }
 };
+
+export const add_corp_info = async (
+  _id: string,
+  data: {
+    kategorija: string;
+    sifra_delatnosti: never[];
+    pdv: boolean;
+    racuni: {
+      broj: string;
+      banka: string;
+    }[];
+    magacini: {
+      id: string;
+      naziv: string;
+    }[];
+    kase: {
+      lokacija: string;
+      tip: string;
+    }[];
+  }
+): Promise<void> => {
+  const response = await fetch(getBaseUrl() + '/korisnik/corp', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      _id,
+      data
+    })
+  });
+
+  if (!response.ok) {
+    const body = await response.json();
+    throw body.message;
+  }
+};

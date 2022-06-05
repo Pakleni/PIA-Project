@@ -19,11 +19,13 @@ const SelectField: React.FC<SelectFieldProps> = ({ name, label, data }) => {
 
   const { touched, error } = meta;
   return (
-    <FormControl>
+    <FormControl fullWidth error={touched ? !!error : undefined}>
       <InputLabel>{label}</InputLabel>
-      <Select {...field}>
+      <Select {...field} fullWidth>
         {data.map((x, i) => (
-          <MenuItem key={i}>{x.label}</MenuItem>
+          <MenuItem key={i} value={x.value}>
+            {x.label}
+          </MenuItem>
         ))}
       </Select>
       {touched && <FormHelperText>{error}</FormHelperText>}
