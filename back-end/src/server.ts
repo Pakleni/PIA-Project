@@ -6,6 +6,7 @@ import korisnikRouter from "./routers/korisnik.routes";
 import zahtevRouter from "./routers/zahtev.routes";
 import artikalRouter from "./routers/artikal.routes";
 import racunRouter from "./routers/racun.routes";
+import predracunRouter from "./routers/predracun.routes";
 
 const app = express();
 app.use(cors());
@@ -38,6 +39,7 @@ router.use("/korisnik", korisnikRouter);
 router.use("/zahtev", zahtevRouter);
 router.use("/artikal", artikalRouter);
 router.use("/racun", racunRouter);
+router.use("/predracun", predracunRouter);
 
 app.use("/", router);
 

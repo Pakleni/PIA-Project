@@ -12,7 +12,6 @@ interface IStavka {
 
 interface IRacun {
   firma: string;
-  otvoren: boolean;
   stavke: IStavka[];
   nacin?: "gotovina" | "cek" | "kartica" | "virman";
   vrednost?: number;
@@ -34,7 +33,6 @@ const stavkaSchema = new Schema<IStavka>({
 
 const racunSchema = new Schema<IRacun>({
   firma: { type: String, required: true },
-  otvoren: { type: Boolean, required: true },
   stavke: { type: [stavkaSchema], sparse: true },
   nacin: { type: String, sparse: true },
   vrednost: { type: Number, sparse: true },
