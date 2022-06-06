@@ -1,14 +1,7 @@
 import mongoose from "mongoose";
+import { IStavka, stavkaSchema } from "./racun";
 
 const Schema = mongoose.Schema;
-
-interface IStavka {
-  naziv_artikla: string;
-  magacin_id: string;
-  kolicina: number;
-  prodajna_cena: number;
-  porez: string;
-}
 
 interface IPredracun {
   firma: string;
@@ -16,14 +9,6 @@ interface IPredracun {
   odeljenje?: string;
   sto?: string;
 }
-
-const stavkaSchema = new Schema<IStavka>({
-  naziv_artikla: { type: String, required: true },
-  magacin_id: { type: String, required: true },
-  kolicina: { type: Number, required: true },
-  prodajna_cena: { type: Number, required: true },
-  porez: { type: String, required: true },
-});
 
 const predracunSchema = new Schema<IPredracun>({
   firma: { type: String, required: true },

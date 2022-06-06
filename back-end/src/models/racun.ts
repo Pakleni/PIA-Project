@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-interface IStavka {
+export interface IStavka {
   naziv_artikla: string;
   magacin_id: string;
   kolicina: number;
@@ -23,7 +23,7 @@ interface IRacun {
   datum: number;
 }
 
-const stavkaSchema = new Schema<IStavka>({
+export const stavkaSchema = new Schema<IStavka>({
   naziv_artikla: { type: String, required: true },
   magacin_id: { type: String, required: true },
   kolicina: { type: Number, required: true },

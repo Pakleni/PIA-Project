@@ -24,6 +24,7 @@ import NavigationBar from './components/Navigation';
 import Requests from './pages/Requests';
 import CorpAddInfo from './pages/CorpAddInfo';
 import ArticlesPage from './pages/articles';
+import BillsPage from './pages/bills';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -98,6 +99,11 @@ const App: React.FC = () => {
       exact: true,
       path: '/articles',
       component: () => <ArticlesPage user={user as User} />
+    },
+    {
+      exact: true,
+      path: '/new-bill',
+      component: () => <BillsPage user={user as User} />
     }
   ];
 
