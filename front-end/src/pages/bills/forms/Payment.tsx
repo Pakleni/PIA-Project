@@ -1,14 +1,22 @@
 import { Grid } from '@mui/material';
 import { useFormikContext } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import InputField from '../../../components/form-comps/InputField';
 import SelectField from '../../../components/form-comps/SelectField';
 
 const Payment: React.FC = () => {
-  const { values } = useFormikContext<{ nacin: string }>();
+  const { values, setFieldValue } = useFormikContext<{ nacin: string }>();
 
   const nacin: string = values['nacin'];
 
+  useEffect(() => {
+    setFieldValue('vrednost', '');
+    setFieldValue('broj_lk', '');
+    setFieldValue('broj_slip_racuna', '');
+    setFieldValue('ime', '');
+    setFieldValue('prezime', '');
+    setFieldValue('narucioc', '');
+  }, [nacin]);
   return (
     <>
       <Grid item xs={12}>
