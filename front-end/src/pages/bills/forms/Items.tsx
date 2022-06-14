@@ -16,14 +16,11 @@ import { IArtikal } from '../../../types/Article';
 import { Bill, BillItem } from '../../../types/Bill';
 import { User } from '../../../types/User';
 import CloseIcon from '@mui/icons-material/Close';
+import { get_price, single_price } from '../../../utils/bills';
 
 interface ItemsProps {
   user: User;
 }
-
-export const price = (x: BillItem): number => {
-  return (x.kolicina * x.prodajna_cena * (100 + parseInt(x.porez))) / 100;
-};
 
 const Items: React.FC<ItemsProps> = ({ user }) => {
   const [articles, SetArticles] = useState<IArtikal[]>([]);
@@ -165,7 +162,7 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
                 {x.kolicina} * {x.prodajna_cena} din * (100 + {x.porez})
                 <br />=
                 <br />
-                {price(x).toLocaleString()} din
+                {single_price(x).toLocaleString()} din
               </Typography>
             </CardContent>
             <CardActions>
@@ -185,8 +182,7 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
       ))}
       <Grid item xs={12}>
         <Typography variant="h6">
-          Total Price:{' '}
-          {values.stavke.reduce((a, x) => a + price(x), 0).toLocaleString()} din
+          Total Price: {get_price(values).toLocaleString()} din
         </Typography>
       </Grid>
     </>

@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import InputField from '../../../components/form-comps/InputField';
 import SelectField from '../../../components/form-comps/SelectField';
 import { Bill, BillItem } from '../../../types/Bill';
-import { price } from './Items';
+import { get_price } from '../../../utils/bills';
 
 const Payment: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<
@@ -26,7 +26,7 @@ const Payment: React.FC = () => {
     setFieldValue('narucioc', '');
   }, [nacin]);
 
-  const cost = values.stavke.reduce((a, x) => a + price(x), 0);
+  const cost = get_price(values);
   return (
     <>
       <Grid item xs={12}>

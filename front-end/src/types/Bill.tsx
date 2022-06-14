@@ -10,6 +10,7 @@ export interface Bill {
   broj_slip_racuna?: string;
   narucioc?: string;
   datum: number;
+  magacin_naziv: string;
 }
 
 export interface BillItem {

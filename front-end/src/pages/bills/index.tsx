@@ -12,9 +12,10 @@ import { User } from '../../types/User';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import Payment from './forms/Payment';
-import Items, { price } from './forms/Items';
+import Items from './forms/Items';
 import { new_bill } from '../../api/bill';
 import { Bill } from '../../types/Bill';
+import { get_price } from '../../utils/bills';
 
 interface BillsPageProps {
   user: User;
@@ -132,7 +133,7 @@ const BillsPage: React.FC<BillsPageProps> = ({ user }) => {
                       (values.nacin === 'gotovina' &&
                         !!values.vrednost &&
                         parseFloat(values.vrednost) <
-                          values.stavke.reduce((a, x) => a + price(x), 0))
+                          get_price(values as unknown as Bill))
                     }
                     type="submit"
                   >

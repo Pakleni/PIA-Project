@@ -15,7 +15,7 @@ export class RacunController {
 
   getWithLicna = async (req: express.Request, res: express.Response) => {
     try {
-      const { broj_lk } = req.body;
+      const { broj_lk } = req.query;
 
       const racuni = (
         await Racun.find({

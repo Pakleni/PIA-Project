@@ -25,6 +25,7 @@ import Requests from './pages/Requests';
 import CorpAddInfo from './pages/CorpAddInfo';
 import ArticlesPage from './pages/articles';
 import BillsPage from './pages/bills';
+import UserBillsPage from './pages/bills/UserBillsPage';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -107,7 +108,13 @@ const App: React.FC = () => {
     }
   ];
 
-  const buyerPages: RouteProps[] = [];
+  const buyerPages: RouteProps[] = [
+    {
+      exact: true,
+      path: '/bills',
+      component: () => <UserBillsPage user={user as User} />
+    }
+  ];
 
   const pages: RouteProps[] = [
     ...(user
