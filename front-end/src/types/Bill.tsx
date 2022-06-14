@@ -1,4 +1,5 @@
 export interface Bill {
+  magacin_id: string;
   firma: string;
   stavke: BillItem[];
   nacin?: 'gotovina' | 'cek' | 'kartica' | 'virman';
@@ -13,7 +14,6 @@ export interface Bill {
 
 export interface BillItem {
   naziv_artikla: string;
-  magacin_id: string;
   kolicina: number;
   prodajna_cena: number;
   porez: string;

@@ -29,8 +29,7 @@ const initialValues = {
   prezime: '',
   narucioc: '',
   stavke: [],
-  selected_article: '',
-  selected_mag: ''
+  selected_article: ''
 };
 
 const initialError = {

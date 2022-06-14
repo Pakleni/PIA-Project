@@ -4,13 +4,13 @@ const Schema = mongoose.Schema;
 
 export interface IStavka {
   naziv_artikla: string;
-  magacin_id: string;
   kolicina: number;
   prodajna_cena: number;
   porez: string;
 }
 
 interface IRacun {
+  magacin_id?: string;
   firma: string;
   stavke: IStavka[];
   nacin?: "gotovina" | "cek" | "kartica" | "virman";
@@ -25,13 +25,13 @@ interface IRacun {
 
 export const stavkaSchema = new Schema<IStavka>({
   naziv_artikla: { type: String, required: true },
-  magacin_id: { type: String, required: true },
   kolicina: { type: Number, required: true },
   prodajna_cena: { type: Number, required: true },
   porez: { type: String, required: true },
 });
 
 const racunSchema = new Schema<IRacun>({
+  magacin_id: { type: String, required: true },
   firma: { type: String, required: true },
   stavke: { type: [stavkaSchema], sparse: true },
   nacin: { type: String, sparse: true },

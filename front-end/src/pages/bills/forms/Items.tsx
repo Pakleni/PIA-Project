@@ -39,7 +39,6 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
   const { values, setFieldValue } = useFormikContext<
     {
       selected_article: string;
-      selected_mag: string;
     } & Bill &
       BillItem
   >();
@@ -48,9 +47,7 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
     (x) => x.naziv === values['selected_article']
   );
 
-  const selected_mag = user.magacini.find(
-    (x) => x.naziv === values['selected_mag']
-  );
+  const selected_mag = user.magacini.find((x) => x.id === values.magacin_id);
 
   useEffect(() => {
     if (selected_mag && selected_article) {
@@ -60,12 +57,15 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
 
       if (cena_stanje) {
         setFieldValue('naziv_artikla', selected_article.naziv);
-        setFieldValue('magacin_id', selected_mag.id);
         setFieldValue('prodajna_cena', cena_stanje.prodajna_cena);
         setFieldValue('porez', selected_article.stopa);
       }
     }
   }, [selected_mag, selected_article]);
+
+  useEffect(() => {
+    setFieldValue('stavke', []);
+  }, [selected_mag]);
 
   const onClick = () => {
     const {
@@ -88,7 +88,6 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
       }
     ]);
     setFieldValue('naziv_artikla', '');
-    setFieldValue('magacin_id', '');
     setFieldValue('prodajna_cena', '');
     setFieldValue('porez', '');
     setFieldValue('kolicina', '');
@@ -99,33 +98,31 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
     <>
       <Grid item xs={12}>
         <SelectField
-          name="selected_article"
-          label="Select Article"
-          data={articles.map((x) => ({
+          name="magacin_id"
+          label="Select Magacin"
+          data={user.magacini.map((x) => ({
             label: x.naziv,
-            value: x.naziv
+            value: x.id
           }))}
         />
       </Grid>
-      {selected_article && (
+      {selected_mag && (
         <Grid item xs={12}>
           <SelectField
-            name="selected_mag"
-            label="Select Magacin"
-            data={selected_article.cene_stanje.map((x) => ({
-              label: x.magacin_id,
-              value: x.magacin_id
+            name="selected_article"
+            label="Select Article"
+            data={articles.map((x) => ({
+              label: x.naziv,
+              value: x.naziv
             }))}
           />
         </Grid>
       )}
-      {selected_mag && (
+
+      {selected_article && (
         <>
           <Grid item xs={12}>
             <InputField name="naziv_artikla" label="naziv_artikla" disabled />
-          </Grid>
-          <Grid item xs={12}>
-            <InputField name="magacin_id" label="magacin_id" disabled />
           </Grid>
           <Grid item xs={12}>
             <InputField name="kolicina" label="kolicina" />
