@@ -3,11 +3,19 @@ import { useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
 import InputField from '../../../components/form-comps/InputField';
 import SelectField from '../../../components/form-comps/SelectField';
+import { Bill, BillItem } from '../../../types/Bill';
+import { price } from './Items';
 
 const Payment: React.FC = () => {
-  const { values, setFieldValue } = useFormikContext<{ nacin: string }>();
+  const { values, setFieldValue } = useFormikContext<
+    {
+      selected_article: string;
+      selected_mag: string;
+    } & Bill &
+      BillItem
+  >();
 
-  const nacin: string = values['nacin'];
+  const nacin: string = values['nacin'] as string;
 
   useEffect(() => {
     setFieldValue('vrednost', '');
@@ -17,6 +25,8 @@ const Payment: React.FC = () => {
     setFieldValue('prezime', '');
     setFieldValue('narucioc', '');
   }, [nacin]);
+
+  const cost = values.stavke.reduce((a, x) => a + price(x), 0);
   return (
     <>
       <Grid item xs={12}>
@@ -71,6 +81,11 @@ const Payment: React.FC = () => {
       {nacin === 'virman' && (
         <Grid item xs={12}>
           <InputField name="narucioc" label="narucioc" />
+        </Grid>
+      )}
+      {nacin === 'gotovina' && values.vrednost && values.vrednost >= cost && (
+        <Grid item xs={12}>
+          Kusur : {(values.vrednost - cost).toLocaleString()} din
         </Grid>
       )}
     </>

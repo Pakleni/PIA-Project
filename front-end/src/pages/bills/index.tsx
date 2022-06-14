@@ -12,7 +12,9 @@ import { User } from '../../types/User';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import Payment from './forms/Payment';
-import Items from './forms/Items';
+import Items, { price } from './forms/Items';
+import { new_bill } from '../../api/bill';
+import { Bill } from '../../types/Bill';
 
 interface BillsPageProps {
   user: User;
@@ -45,7 +47,7 @@ const BillsPage: React.FC<BillsPageProps> = ({ user }) => {
   const onSubmit = async (data: typeof initialValues) => {
     setMessage(initialError);
     try {
-      //   await register_admin(username, password);
+      await new_bill(user._id, data as unknown as Bill);
       data;
       setMessage({
         error: false,
@@ -112,7 +114,7 @@ const BillsPage: React.FC<BillsPageProps> = ({ user }) => {
               kolicina: Yup.string().matches(/^[0-9]+$/, 'Must be only digits')
             })}
           >
-            {({ isSubmitting }) => (
+            {({ values, isSubmitting }) => (
               <Form>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
@@ -125,7 +127,16 @@ const BillsPage: React.FC<BillsPageProps> = ({ user }) => {
                   <Payment />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button disabled={isSubmitting} type="submit">
+                  <Button
+                    disabled={
+                      isSubmitting ||
+                      (values.nacin === 'gotovina' &&
+                        !!values.vrednost &&
+                        parseFloat(values.vrednost) <
+                          values.stavke.reduce((a, x) => a + price(x), 0))
+                    }
+                    type="submit"
+                  >
                     {isSubmitting ? <CircularProgress /> : 'Submit'}
                   </Button>
                 </Grid>

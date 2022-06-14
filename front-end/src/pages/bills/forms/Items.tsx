@@ -1,15 +1,29 @@
-import { Button, Grid, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  IconButton,
+  Typography
+} from '@mui/material';
 import { useFormikContext } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { getArticles } from '../../../api/articles';
 import InputField from '../../../components/form-comps/InputField';
 import SelectField from '../../../components/form-comps/SelectField';
 import { IArtikal } from '../../../types/Article';
+import { Bill, BillItem } from '../../../types/Bill';
 import { User } from '../../../types/User';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface ItemsProps {
   user: User;
 }
+
+export const price = (x: BillItem): number => {
+  return (x.kolicina * x.prodajna_cena * (100 + parseInt(x.porez))) / 100;
+};
 
 const Items: React.FC<ItemsProps> = ({ user }) => {
   const [articles, SetArticles] = useState<IArtikal[]>([]);
@@ -22,22 +36,13 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
     Refresh();
   }, []);
 
-  const { values, setFieldValue } = useFormikContext<{
-    selected_article: string;
-    selected_mag: string;
-    naziv_artikla: string;
-    magacin_id: string;
-    kolicina: string;
-    prodajna_cena: string;
-    porez: string;
-    stavke: {
-      naziv_artikla: string;
-      magacin_id: string;
-      kolicina: number;
-      prodajna_cena: number;
-      porez: string;
-    }[];
-  }>();
+  const { values, setFieldValue } = useFormikContext<
+    {
+      selected_article: string;
+      selected_mag: string;
+    } & Bill &
+      BillItem
+  >();
 
   const selected_article = articles.find(
     (x) => x.naziv === values['selected_article']
@@ -151,13 +156,41 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
       <Grid item xs={12}>
         <Typography variant="h6">Added Items:</Typography>
       </Grid>
+      {values.stavke.map((x, i) => (
+        <Grid item xs={12} key={i}>
+          <Card sx={{ minWidth: 275 }}>
+            <CardContent>
+              <Typography color="text.secondary" gutterBottom variant="h6">
+                {x.kolicina} x {x.naziv_artikla}
+              </Typography>
+              <Typography variant="body2">
+                <br />
+                {x.kolicina} * {x.prodajna_cena} din * (100 + {x.porez})
+                <br />=
+                <br />
+                {price(x).toLocaleString()} din
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <IconButton
+                onClick={() =>
+                  setFieldValue('stavke', [
+                    ...values.stavke.slice(0, i),
+                    ...values.stavke.slice(i + 1)
+                  ])
+                }
+              >
+                <CloseIcon />
+              </IconButton>
+            </CardActions>
+          </Card>
+        </Grid>
+      ))}
       <Grid item xs={12}>
-        {values.stavke.map((x) => (
-          <>
-            {x.naziv_artikla}
-            {x.kolicina}
-          </>
-        ))}
+        <Typography variant="h6">
+          Total Price:{' '}
+          {values.stavke.reduce((a, x) => a + price(x), 0).toLocaleString()} din
+        </Typography>
       </Grid>
     </>
   );
