@@ -9,6 +9,10 @@ racunRouter
   .route("/licna")
   .get((req, res) => new RacunController().getWithLicna(req, res));
 
+racunRouter
+  .route("/get5")
+  .get((req, res) => new RacunController().getLast5(req, res));
+
 racunRouter.route("/").post((req, res) => new RacunController().add(req, res));
 
 export default racunRouter;

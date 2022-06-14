@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import InputField from '../components/form-comps/InputField';
 import { login } from '../api/user';
 import {
   Box,
   Button,
+  Card,
+  CardContent,
   CircularProgress,
   Container,
   Grid,
@@ -12,6 +14,9 @@ import {
 } from '@mui/material';
 import { User } from '../types/User';
 import * as Yup from 'yup';
+import { get_price } from '../utils/bills';
+import { get5 } from '../api/bill';
+import { Bill } from '../types/Bill';
 
 const initialValues = {
   username: '',
@@ -35,6 +40,21 @@ const FrontPage: React.FC<FrontPageProps> = ({ setUser }) => {
       setError(true);
     }
   };
+
+  const [data, setData] = useState<(Bill & { amount: string })[]>([]);
+
+  const onLoad = async () => {
+    setData(
+      (await get5()).map((x) => ({
+        ...x,
+        amount: get_price(x).toLocaleString()
+      }))
+    );
+  };
+
+  useEffect(() => {
+    onLoad();
+  }, []);
 
   return (
     <Box p={4} width={'100%'}>
@@ -76,6 +96,35 @@ const FrontPage: React.FC<FrontPageProps> = ({ setUser }) => {
                   </Grid>
                 )}
               </Grid>
+              <>
+                {data.map((x, i) => (
+                  <Card key={i}>
+                    <CardContent>
+                      <Typography
+                        color="text.secondary"
+                        gutterBottom
+                        variant="h6"
+                      >
+                        {x.firma} [{x.amount} din]
+                        {x.stavke.length && (
+                          <>
+                            <br />
+                            Porez: {x.stavke[0].porez}
+                          </>
+                        )}
+                      </Typography>
+                      <Typography variant="body2">
+                        {x.stavke.map((y) => (
+                          <>
+                            • {y.kolicina} x {y.naziv_artikla}
+                            <br />
+                          </>
+                        ))}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                ))}
+              </>
             </Container>
           </Form>
         )}

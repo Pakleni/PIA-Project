@@ -17,6 +17,22 @@ export const new_bill = async (_id: string, data: Bill): Promise<void> => {
   }
 };
 
+export const get5 = async (): Promise<Bill[]> => {
+  const response = await fetch(getBaseUrl() + `/racun/get5`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (response.ok) {
+    const body = await response.json();
+    return body as Bill[];
+  } else {
+    throw await response.text();
+  }
+};
+
 export const get_bills_id = async (broj_lk: string): Promise<Bill[]> => {
   const response = await fetch(
     getBaseUrl() + `/racun/licna?broj_lk=${broj_lk}`,
