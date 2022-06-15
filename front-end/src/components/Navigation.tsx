@@ -50,11 +50,15 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
     link: string;
   }[] = [
     {
-      label: 'Articles',
+      label: 'Robe i Usluge',
       link: '/articles'
     },
     {
-      label: 'New Bill',
+      label: 'Raspored Artikala',
+      link: '/categories'
+    },
+    {
+      label: 'Izdavanje Racuna',
       link: '/new-bill'
     },
     {
@@ -92,11 +96,24 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
       link: '/corp/signup'
     }
   ];
+
+  const ugostitelj: {
+    label: string;
+    link: string;
+  }[] = [
+    {
+      label: 'Raspored Stolova',
+      link: '/tables'
+    }
+  ];
+
   const pages = user
     ? user.type === 'Admin'
       ? adminPages
       : user.type === 'Buyer'
       ? userPages
+      : user.kategorija === 'ugostitelj'
+      ? [...corpPages, ...ugostitelj]
       : corpPages
     : notLoggedPages;
 
@@ -105,23 +122,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              noWrap
-              to={'/'}
-              component={Link}
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none'
-              }}
-            >
-              HOME
-            </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
                 <Button

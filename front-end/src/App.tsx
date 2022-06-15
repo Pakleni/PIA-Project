@@ -46,6 +46,13 @@ const App: React.FC = () => {
       try {
         const response = await login(username, password);
         setUser(response);
+        history.push(
+          response.type === 'Admin'
+            ? '/requests'
+            : response.type === 'Buyer'
+            ? '/bills'
+            : '/articles'
+        );
       } catch (e) {
         localStorage.removeItem('user');
         setUser(undefined);
@@ -84,6 +91,20 @@ const App: React.FC = () => {
       exact: true,
       path: '/requests',
       component: Requests
+    },
+
+    {
+      exact: true,
+      path: '/categories',
+      component: Page404
+    }
+  ];
+
+  const ugostitelj = [
+    {
+      exact: true,
+      path: '/tables',
+      component: Page404
     }
   ];
 
