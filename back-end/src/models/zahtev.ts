@@ -13,7 +13,7 @@ interface IZahtev {
   adresa?: string;
   pib?: string;
   maticni_broj?: string;
-  // grb: null;
+  grb: string;
 }
 
 const zahtevSchema = new Schema<IZahtev>({
@@ -27,7 +27,7 @@ const zahtevSchema = new Schema<IZahtev>({
   adresa: { type: String, sparse: true },
   pib: { type: String, sparse: true },
   maticni_broj: { type: String, sparse: true },
-  // grb: null,
+  grb: { type: String, sparse: true },
 });
 
 export default mongoose.model<IZahtev>("Zahtev", zahtevSchema, "zahtevi");

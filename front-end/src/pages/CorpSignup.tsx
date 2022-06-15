@@ -24,8 +24,8 @@ const initialValues = {
   naziv: '',
   adresa: '',
   pib: '',
-  maticni_broj: ''
-  // grb: null
+  maticni_broj: '',
+  grb: null
 };
 
 const initialError = {
@@ -83,21 +83,19 @@ const CorpSignup: React.FC = () => {
             .matches(/^[1-9][0-9]+$/, "Can't start with 0")
             .min(9, '9 digits')
             .max(9, '9 digits'),
-          maticni_broj: Yup.string().required()
-          // grb: Yup.mixed()
-          //   .required()
-          //   .test('type', 'Must be jpeg/png', (value) => {
-          //     return (
-          //       (value && value.type === 'image/jpeg') ||
-          //       (value && value.type === 'image/png')
-          //     );
-          //   })
-          //   .test('size', 'Must be 100x100-300x300', (value) => {
-          //     return (
-          //       (value && value.type === 'image/jpeg') ||
-          //       (value && value.type === 'image/png')
-          //     );
-          //   })
+          maticni_broj: Yup.string().required(),
+          grb: Yup.mixed()
+            .required()
+            .test('type', 'Must be jpeg/png', (value) => {
+              return (
+                (value && value.type === 'image/jpeg') ||
+                (value && value.type === 'image/png')
+              );
+            })
+            .test('size', 'Must be 100x100-300x300', (value) => {
+              //TODO add size requirements
+              return true || value;
+            })
         })}
       >
         {({ isSubmitting }) => (
@@ -152,7 +150,9 @@ const CorpSignup: React.FC = () => {
                 <Grid item xs={12}>
                   <InputField name="maticni_broj" label="Maticni broj" />
                 </Grid>
-                {/* <Grid item xs={12}>//TODO grb</Grid> */}
+                <Grid item xs={12}>
+                  <InputField type="file" name="grb" label="Grb" shrink />
+                </Grid>
                 <Grid item xs={12}>
                   <Button disabled={isSubmitting} type="submit">
                     {isSubmitting ? <CircularProgress /> : 'Submit'}

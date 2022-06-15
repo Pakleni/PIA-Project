@@ -7,10 +7,13 @@ import zahtevRouter from "./routers/zahtev.routes";
 import artikalRouter from "./routers/artikal.routes";
 import racunRouter from "./routers/racun.routes";
 import predracunRouter from "./routers/predracun.routes";
+import fileUpload from "express-fileupload";
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 mongoose.connect("mongodb://localhost:27017/piameanDB");
 const connection = mongoose.connection;
@@ -42,7 +45,8 @@ router.use("/racun", racunRouter);
 router.use("/predracun", predracunRouter);
 
 app.use("/", router);
-
 app.listen(4000, () =>
   console.log(`[server] Express server running on port 4000`)
 );
+
+app.use("/files", express.static("./src/public"));

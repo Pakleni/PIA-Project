@@ -45,7 +45,7 @@ export class ZahtevController {
                   adresa: zahtev.adresa,
                   pib: zahtev.pib,
                   maticni_broj: zahtev.maticni_broj,
-                  //grb
+                  grb: zahtev.grb,
                   type: "Company",
                 }).save();
 

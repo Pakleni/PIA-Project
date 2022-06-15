@@ -36,7 +36,7 @@ interface IKorisnik {
   racuni?: IRacun[];
   magacini?: IMagacin[];
   kase?: IKasa[];
-  // grb: null;
+  grb: string;
 }
 
 const magacinSchema = new Schema<IMagacin>({
@@ -73,7 +73,7 @@ const korisnikSchema = new Schema<IKorisnik>({
   racuni: { type: [racunSchema], sparse: true },
   magacini: { type: [magacinSchema], sparse: true },
   kase: { type: [kasaSchema], sparse: true },
-  // grb: null,
+  grb: { type: String, sparse: true },
 });
 
 export default mongoose.model<IKorisnik>(

@@ -2,6 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import Korisnik from "../models/korisnik";
 import Zahtev from "../models/zahtev";
+import fileUpload from "express-fileupload";
+import path from "path";
 
 export class KorisnikController {
   login = async (req: express.Request, res: express.Response) => {
@@ -43,7 +45,31 @@ export class KorisnikController {
   };
   corp_signup = async (req: express.Request, res: express.Response) => {
     try {
-      const { user, data } = req.body;
+      const { user, data: got_data } = req.body;
+
+      if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send("No files were uploaded.");
+      }
+
+      const parsed_data = JSON.parse(got_data);
+      const grb_file = req.files.grb as fileUpload.UploadedFile;
+
+      const upload_path = path.join(
+        __dirname,
+        `.././public/uploads/${parsed_data.username}-${grb_file.name}`
+      );
+
+      try {
+        await grb_file.mv(upload_path);
+      } catch (e) {
+        console.log("[server] ", e);
+        return res.status(400).json({ message: "failed" });
+      }
+
+      const data = {
+        ...parsed_data,
+        grb: `http://localhost:4000/files/uploads/${parsed_data.username}-${grb_file.name}`,
+      };
 
       if (user) {
         const admin = await Korisnik.findOne({
@@ -51,6 +77,7 @@ export class KorisnikController {
           password: user.password,
           type: "Admin",
         });
+
         if (admin) {
           try {
             await new Korisnik({ ...data, type: "Company" }).save();

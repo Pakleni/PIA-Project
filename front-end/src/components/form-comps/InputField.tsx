@@ -6,9 +6,10 @@ interface InputFieldProps {
   name: string;
   label: string;
   disabled?: boolean;
-  type?: 'text' | 'number' | 'password';
+  type?: 'text' | 'number' | 'password' | 'file';
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
+  shrink?: boolean;
 }
 
 const InputField: React.FC<InputFieldProps> = (props) => {
@@ -16,12 +17,13 @@ const InputField: React.FC<InputFieldProps> = (props) => {
 
   const { touched, error } = meta;
 
-  const { startAdornment, endAdornment, ...rest } = props;
+  const { startAdornment, endAdornment, shrink, ...rest } = props;
 
   return (
     <TextField
       {...field}
       {...rest}
+      InputLabelProps={{ shrink }}
       fullWidth
       helperText={touched ? error : undefined}
       error={touched && !!error}
