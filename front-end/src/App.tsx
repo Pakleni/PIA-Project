@@ -148,7 +148,9 @@ const App: React.FC = () => {
             ? adminPages
             : user.type === 'Company'
             ? user.kategorija
-              ? corpPages
+              ? user.kategorija === 'ugostitelj'
+                ? [...corpPages, ...ugostitelj]
+                : corpPages
               : newCorpPages
             : buyerPages)
         ]
