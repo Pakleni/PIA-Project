@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material';
 import React from 'react';
 import CheckboxField from '../../../components/form-comps/CheckboxField';
+import FileUpload from '../../../components/form-comps/FileUpload';
 import InputTextField from '../../../components/form-comps/InputTextField';
 
 const AddedInfo: React.FC = () => {
@@ -38,6 +39,9 @@ const AddedInfo: React.FC = () => {
       </Grid>
       <Grid item xs={12}>
         <InputTextField name="deklaracija" label="Deklaracija" />
+      </Grid>
+      <Grid item xs={12}>
+        <FileUpload name="slicica" label="Slicica" />
       </Grid>
     </>
   );

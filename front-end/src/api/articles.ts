@@ -44,17 +44,17 @@ export const addArticle = async (
       min_zalihe: string;
       max_zalihe: string;
     }[];
+    slicica: File;
   }
 ): Promise<void> => {
+  const formData = new FormData();
+  formData.append('_id', _id);
+  formData.append('data', JSON.stringify({ ...data, slicica: '' }));
+  formData.append('slicica', data.slicica);
+
   const response = await fetch(getBaseUrl() + `/artikal`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      _id,
-      data
-    })
+    body: formData
   });
   if (!response.ok) {
     throw await response.text();

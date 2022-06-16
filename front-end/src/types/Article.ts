@@ -25,5 +25,5 @@ export interface IArtikal {
     min_zalihe: string;
     max_zalihe: string;
   }[];
-  //slicica
+  slicica: string;
 }

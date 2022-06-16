@@ -17,6 +17,7 @@ import AddedInfo from './forms/AddedInfo';
 import GeneralInfo from './forms/GeneralInfo';
 import PricesStates from './forms/PricesStates';
 import { addArticle } from '../../api/articles';
+import { imageDimensionCheck } from '../../utils/yup-helpers';
 
 interface CreateArticlesProps {
   user: User;
@@ -59,7 +60,8 @@ const CreateArticles: React.FC<CreateArticlesProps> = ({ user }) => {
       stanje: string;
       min_zalihe: string;
       max_zalihe: string;
-    }[]
+    }[],
+    slicica: null
   };
 
   const steps = ['General Info', 'Added Info', 'Prices and States'];
@@ -134,7 +136,20 @@ const CreateArticles: React.FC<CreateArticlesProps> = ({ user }) => {
                   'Must be only digits'
                 ),
                 opis: Yup.string(),
-                deklaracija: Yup.string()
+                deklaracija: Yup.string(),
+                slicica: Yup.mixed()
+                  .test('type', 'Must be jpeg/png', (value) => {
+                    return (
+                      !value ||
+                      (value && value.type === 'image/jpeg') ||
+                      (value && value.type === 'image/png')
+                    );
+                  })
+                  .test(
+                    'size',
+                    'Brtween 100x100 and 300x300',
+                    imageDimensionCheck(100, 100, 300, 300)
+                  )
               }),
               Yup.object().shape({
                 cene_stanje: Yup.array()

@@ -1,6 +1,8 @@
 import express from "express";
 import Korisnik from "../models/korisnik";
 import Artikal from "../models/artikal";
+import fileUpload from "express-fileupload";
+import path from "path";
 
 export class ArtikalController {
   get = async (req: express.Request, res: express.Response) => {
@@ -17,7 +19,35 @@ export class ArtikalController {
   };
   add = async (req: express.Request, res: express.Response) => {
     try {
-      const { _id, data } = req.body;
+      const { _id, data: got_data } = req.body;
+      const parsed_data = JSON.parse(got_data);
+
+      let slicica_path;
+
+      if (!req.files || Object.keys(req.files).length === 0) {
+        slicica_path = "http://localhost:4000/files/no_img.png";
+      } else {
+        const slicica = req.files.slicica as fileUpload.UploadedFile;
+
+        const upload_path = path.join(
+          __dirname,
+          `.././public/uploads/${_id}-${parsed_data.sifra}-${slicica.name}`
+        );
+
+        try {
+          await slicica.mv(upload_path);
+        } catch (e) {
+          console.log("[server] ", e);
+          return res.status(400).json({ message: "failed" });
+        }
+        slicica_path = `http://localhost:4000/files/uploads/${_id}-${parsed_data.sifra}-${slicica.name}`;
+      }
+
+      const data = {
+        ...parsed_data,
+        slicica: slicica_path,
+      };
+
       const korisnik = await Korisnik.findOne({ _id });
 
       if (korisnik) {
@@ -32,6 +62,7 @@ export class ArtikalController {
       return res.status(400).json({ message: "failed" });
     }
   };
+
   edit = async (req: express.Request, res: express.Response) => {
     try {
       const { user, _id, data } = req.body;
