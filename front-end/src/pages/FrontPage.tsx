@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
-import InputField from '../components/form-comps/InputField';
+import InputTextField from '../components/form-comps/InputTextField';
 import { login } from '../api/user';
 import {
   Box,
@@ -74,10 +74,10 @@ const FrontPage: React.FC<FrontPageProps> = ({ setUser }) => {
                   <Typography variant="h3">Login</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="username" label="Username" />
+                  <InputTextField name="username" label="Username" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField
+                  <InputTextField
                     name="password"
                     label="Password"
                     type="password"

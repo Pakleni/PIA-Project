@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
-import InputField from '../components/form-comps/InputField';
+import InputTextField from '../components/form-comps/InputTextField';
 import { change_password } from '../api/user';
 import {
   Box,
@@ -84,24 +84,24 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ user, Logout }) => {
                   <Typography variant="h3">Change Password</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="username" label="Username" disabled />
+                  <InputTextField name="username" label="Username" disabled />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField
+                  <InputTextField
                     name="password"
                     label="Password"
                     type="password"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField
+                  <InputTextField
                     name="new_password"
                     label="New Password"
                     type="password"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField
+                  <InputTextField
                     name="repeat_password"
                     label="Repeat Password"
                     type="password"

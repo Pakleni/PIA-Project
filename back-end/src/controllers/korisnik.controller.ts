@@ -32,7 +32,6 @@ export class KorisnikController {
           await new Korisnik({ ...data, type: "Buyer" }).save();
           return res.status(200).json({ message: "Success!" });
         } catch (e) {
-          //TODO {Add correct errors to endpoints}
           return res.status(400).json({ message: "failed" });
         }
       else {
@@ -83,7 +82,6 @@ export class KorisnikController {
             await new Korisnik({ ...data, type: "Company" }).save();
             return res.status(200).json({ message: "Success!" });
           } catch (e) {
-            //TODO {Add correct errors to endpoints}
             return res.status(400).json({ message: "failed" });
           }
         } else {
@@ -119,7 +117,6 @@ export class KorisnikController {
             .status(response.status)
             .json({ message: response.message });
         } catch (e) {
-          //TODO {Add correct errors to endpoints}
           return res.status(400).json({ message: e.toString() });
         } finally {
           await session.endSession();
@@ -137,7 +134,6 @@ export class KorisnikController {
         await new Korisnik({ username, password, type: "Admin" }).save();
         return res.status(200).json({ message: "Success!" });
       } catch (e) {
-        //TODO {Add correct errors to endpoints}
         return res.status(400).json({ message: "failed" });
       }
     } catch (e) {

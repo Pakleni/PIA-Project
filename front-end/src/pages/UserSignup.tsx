@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
-import InputField from '../components/form-comps/InputField';
+import InputTextField from '../components/form-comps/InputTextField';
 import { register_user } from '../api/user';
 import {
   Box,
@@ -84,37 +84,37 @@ const UserSignup: React.FC = () => {
                   <Typography variant="h3">Register User</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="username" label="Username" />
+                  <InputTextField name="username" label="Username" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField
+                  <InputTextField
                     name="password"
                     label="Password"
                     type="password"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField
+                  <InputTextField
                     name="repeat_password"
                     label="Repeat Password"
                     type="password"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="ime" label="Ime" />
+                  <InputTextField name="ime" label="Ime" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="prezime" label="Prezime" />
+                  <InputTextField name="prezime" label="Prezime" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField
+                  <InputTextField
                     name="telefon"
                     label="Telefon"
                     startAdornment="+381"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="broj_lk" label="Broj Licne" />
+                  <InputTextField name="broj_lk" label="Broj Licne" />
                 </Grid>
                 <Grid item xs={12}>
                   <Button disabled={isSubmitting} type="submit">

@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
-import InputField from '../../../components/form-comps/InputField';
+import InputTextField from '../../../components/form-comps/InputTextField';
 import { User } from '../../../types/User';
 
 interface PricesStatesProps {
@@ -16,28 +16,28 @@ const PricesStates: React.FC<PricesStatesProps> = ({ user }) => {
             <Typography variant="h6">{x.naziv}</Typography>
           </Grid>
           <Grid item xs={12}>
-            <InputField
+            <InputTextField
               name={`cene_stanje[${i}].nabavna_cena`}
               label="Nabavna Cena"
             />
           </Grid>
           <Grid item xs={12}>
-            <InputField
+            <InputTextField
               name={`cene_stanje[${i}].prodajna_cena`}
               label="Prodajna Cena"
             />
           </Grid>
           <Grid item xs={12}>
-            <InputField name={`cene_stanje[${i}].stanje`} label="Stanje" />
+            <InputTextField name={`cene_stanje[${i}].stanje`} label="Stanje" />
           </Grid>
           <Grid item xs={12}>
-            <InputField
+            <InputTextField
               name={`cene_stanje[${i}].min_zalihe`}
               label="Min zalihe"
             />
           </Grid>
           <Grid item xs={12}>
-            <InputField
+            <InputTextField
               name={`cene_stanje[${i}].max_zalihe`}
               label="Maks zalihe"
             />

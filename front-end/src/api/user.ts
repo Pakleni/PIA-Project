@@ -108,24 +108,18 @@ export const register_corp = async (data: {
   adresa: string;
   pib: string;
   maticni_broj: string;
+  grb: File;
 }): Promise<void> => {
   const user = localStorage.getItem('user');
 
+  const formData = new FormData();
+  user && formData.append('user', user);
+  formData.append('data', JSON.stringify({ ...data, grb: '' }));
+  formData.append('grb', data.grb);
+
   const response = await fetch(getBaseUrl() + '/korisnik/corp/signup', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(
-      user
-        ? {
-            user: JSON.parse(user),
-            data
-          }
-        : {
-            data
-          }
-    )
+    body: formData
   });
 
   if (!response.ok) {

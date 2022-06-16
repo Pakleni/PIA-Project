@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import { useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
-import InputField from '../../../components/form-comps/InputField';
+import InputTextField from '../../../components/form-comps/InputTextField';
 import SelectField from '../../../components/form-comps/SelectField';
 import { Bill, BillItem } from '../../../types/Bill';
 import { get_price } from '../../../utils/bills';
@@ -55,32 +55,32 @@ const Payment: React.FC = () => {
       </Grid>
       {nacin === 'gotovina' && (
         <Grid item xs={12}>
-          <InputField name="vrednost" label="vrednost" />
+          <InputTextField name="vrednost" label="vrednost" />
         </Grid>
       )}
       {['gotovina', 'kartica', 'cek'].find((x) => x === nacin) && (
         <Grid item xs={12}>
-          <InputField name="broj_lk" label="broj_lk" />
+          <InputTextField name="broj_lk" label="broj_lk" />
         </Grid>
       )}
       {nacin === 'kartica' && (
         <Grid item xs={12}>
-          <InputField name="broj_slip_racuna" label="broj_slip_racuna" />
+          <InputTextField name="broj_slip_racuna" label="broj_slip_racuna" />
         </Grid>
       )}
       {nacin === 'cek' && (
         <>
           <Grid item xs={12}>
-            <InputField name="ime" label="ime" />
+            <InputTextField name="ime" label="ime" />
           </Grid>
           <Grid item xs={12}>
-            <InputField name="prezime" label="prezime" />
+            <InputTextField name="prezime" label="prezime" />
           </Grid>
         </>
       )}
       {nacin === 'virman' && (
         <Grid item xs={12}>
-          <InputField name="narucioc" label="narucioc" />
+          <InputTextField name="narucioc" label="narucioc" />
         </Grid>
       )}
       {nacin === 'gotovina' && values.vrednost && values.vrednost >= cost && (

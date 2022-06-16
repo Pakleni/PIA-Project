@@ -10,7 +10,7 @@ import {
 import { useFormikContext } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { getArticles } from '../../../api/articles';
-import InputField from '../../../components/form-comps/InputField';
+import InputTextField from '../../../components/form-comps/InputTextField';
 import SelectField from '../../../components/form-comps/SelectField';
 import { IArtikal } from '../../../types/Article';
 import { Bill, BillItem } from '../../../types/Bill';
@@ -119,16 +119,24 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
       {selected_article && (
         <>
           <Grid item xs={12}>
-            <InputField name="naziv_artikla" label="naziv_artikla" disabled />
+            <InputTextField
+              name="naziv_artikla"
+              label="naziv_artikla"
+              disabled
+            />
           </Grid>
           <Grid item xs={12}>
-            <InputField name="kolicina" label="kolicina" />
+            <InputTextField name="kolicina" label="kolicina" />
           </Grid>
           <Grid item xs={12}>
-            <InputField name="prodajna_cena" label="prodajna_cena" disabled />
+            <InputTextField
+              name="prodajna_cena"
+              label="prodajna_cena"
+              disabled
+            />
           </Grid>
           <Grid item xs={12}>
-            <InputField name="porez" label="porez" disabled />
+            <InputTextField name="porez" label="porez" disabled />
           </Grid>
           <Grid item xs={12}>
             <Button

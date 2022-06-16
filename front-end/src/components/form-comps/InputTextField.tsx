@@ -6,13 +6,13 @@ interface InputFieldProps {
   name: string;
   label: string;
   disabled?: boolean;
-  type?: 'text' | 'number' | 'password' | 'file';
+  type?: 'text' | 'number' | 'password';
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
   shrink?: boolean;
 }
 
-const InputField: React.FC<InputFieldProps> = (props) => {
+const InputTextField: React.FC<InputFieldProps> = (props) => {
   const [field, meta] = useField(props.name);
 
   const { touched, error } = meta;
@@ -39,4 +39,4 @@ const InputField: React.FC<InputFieldProps> = (props) => {
   );
 };
 
-export default InputField;
+export default InputTextField;

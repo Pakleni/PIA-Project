@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
-import InputField from '../components/form-comps/InputField';
+import InputTextField from '../components/form-comps/InputTextField';
 import { register_corp } from '../api/user';
 import {
   Box,
@@ -11,7 +11,8 @@ import {
   Typography
 } from '@mui/material';
 import * as Yup from 'yup';
-import { validatePassword } from '../utils/yup-helpers';
+import { imageDimensionCheck, validatePassword } from '../utils/yup-helpers';
+import FileUpload from '../components/form-comps/FileUpload';
 
 const initialValues = {
   username: '',
@@ -25,7 +26,7 @@ const initialValues = {
   adresa: '',
   pib: '',
   maticni_broj: '',
-  grb: null
+  grb: ''
 };
 
 const initialError = {
@@ -85,17 +86,19 @@ const CorpSignup: React.FC = () => {
             .max(9, '9 digits'),
           maticni_broj: Yup.string().required(),
           grb: Yup.mixed()
-            .required()
             .test('type', 'Must be jpeg/png', (value) => {
               return (
+                !value ||
                 (value && value.type === 'image/jpeg') ||
                 (value && value.type === 'image/png')
               );
             })
-            .test('size', 'Must be 100x100-300x300', (value) => {
-              //TODO add size requirements
-              return true || value;
-            })
+            .test(
+              'size',
+              'Brtween 100x100 and 300x300',
+              imageDimensionCheck(100, 100, 300, 300)
+            )
+            .required()
         })}
       >
         {({ isSubmitting }) => (
@@ -106,52 +109,52 @@ const CorpSignup: React.FC = () => {
                   <Typography variant="h3">Register Corporation</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="username" label="Username" />
+                  <InputTextField name="username" label="Username" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField
+                  <InputTextField
                     name="password"
                     label="Password"
                     type="password"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField
+                  <InputTextField
                     name="repeat_password"
                     label="Repeat Password"
                     type="password"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="ime" label="Ime" />
+                  <InputTextField name="ime" label="Ime" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="prezime" label="Prezime" />
+                  <InputTextField name="prezime" label="Prezime" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField
+                  <InputTextField
                     name="telefon"
                     label="Telefon"
                     startAdornment="+381"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="email" label="Email" />
+                  <InputTextField name="email" label="Email" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="naziv" label="Naziv" />
+                  <InputTextField name="naziv" label="Naziv" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="adresa" label="Adresa" />
+                  <InputTextField name="adresa" label="Adresa" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="pib" label="PIB" />
+                  <InputTextField name="pib" label="PIB" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="maticni_broj" label="Maticni broj" />
+                  <InputTextField name="maticni_broj" label="Maticni broj" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField type="file" name="grb" label="Grb" shrink />
+                  <FileUpload name="grb" label="Grb" />
                 </Grid>
                 <Grid item xs={12}>
                   <Button disabled={isSubmitting} type="submit">

@@ -14,7 +14,7 @@ import SelectField from '../components/form-comps/SelectField';
 import AutocompleteField from '../components/form-comps/AutocompleteField';
 import { sifre_delatnosti } from '../utils/sifre';
 import CheckboxField from '../components/form-comps/CheckboxField';
-import InputField from '../components/form-comps/InputField';
+import InputTextField from '../components/form-comps/InputTextField';
 import CloseIcon from '@mui/icons-material/Close';
 import { User } from '../types/User';
 import { add_corp_info } from '../api/user';
@@ -187,10 +187,10 @@ const CorpAddInfo: React.FC<CorpAddInfoProps> = ({ user, Login }) => {
                   <Typography variant="h5">Account</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="racun_broj" label="Account number" />
+                  <InputTextField name="racun_broj" label="Account number" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="racun_banka" label="Account bank" />
+                  <InputTextField name="racun_banka" label="Account bank" />
                 </Grid>
                 <Grid item xs={12}>
                   <Button
@@ -245,7 +245,10 @@ const CorpAddInfo: React.FC<CorpAddInfoProps> = ({ user, Login }) => {
                   <Typography variant="h5">Cashbox</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="kasa_lokacija" label="Cashbox location" />
+                  <InputTextField
+                    name="kasa_lokacija"
+                    label="Cashbox location"
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <SelectField
@@ -311,10 +314,10 @@ const CorpAddInfo: React.FC<CorpAddInfoProps> = ({ user, Login }) => {
                   <Typography variant="h5">Storage</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="magacin_id" label="Storage id" />
+                  <InputTextField name="magacin_id" label="Storage id" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputField name="magacin_naziv" label="Storage name" />
+                  <InputTextField name="magacin_naziv" label="Storage name" />
                 </Grid>
                 <Grid item xs={12}>
                   <Button

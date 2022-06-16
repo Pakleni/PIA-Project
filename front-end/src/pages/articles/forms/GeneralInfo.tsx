@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import React from 'react';
-import InputField from '../../../components/form-comps/InputField';
+import InputTextField from '../../../components/form-comps/InputTextField';
 import SelectField from '../../../components/form-comps/SelectField';
 import { User } from '../../../types/User';
 
@@ -12,13 +12,13 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ user }) => {
   return (
     <>
       <Grid item xs={12}>
-        <InputField name="sifra" label="Code" />
+        <InputTextField name="sifra" label="Code" />
       </Grid>
       <Grid item xs={12}>
-        <InputField name="naziv" label="Name" />
+        <InputTextField name="naziv" label="Name" />
       </Grid>
       <Grid item xs={12}>
-        <InputField name="jedinica" label="Jedinica Mere" />
+        <InputTextField name="jedinica" label="Jedinica Mere" />
       </Grid>
       <Grid item xs={12}>
         {user.pdv && (
@@ -40,7 +40,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ user }) => {
       </Grid>
       {user.kategorija === 'ugostitelj' && (
         <Grid item xs={12}>
-          <InputField name="tip" label="Type" />
+          <InputTextField name="tip" label="Type" />
         </Grid>
       )}
     </>
