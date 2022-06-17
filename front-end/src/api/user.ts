@@ -105,7 +105,10 @@ export const register_corp = async (data: {
   telefon: string;
   email: string;
   naziv: string;
-  adresa: string;
+  drzava?: string;
+  grad?: string;
+  postanski_broj?: string;
+  ulica_broj?: string;
   pib: string;
   maticni_broj: string;
   grb: File;

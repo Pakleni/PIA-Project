@@ -23,7 +23,10 @@ const initialValues = {
   telefon: '',
   email: '',
   naziv: '',
-  adresa: '',
+  drzava: '',
+  grad: '',
+  postanski_broj: '',
+  ulica_broj: '',
   pib: '',
   maticni_broj: '',
   grb: ''
@@ -77,7 +80,10 @@ const CorpSignup: React.FC = () => {
             .max(9, 'Not more than 9 digits'),
           email: Yup.string().email().required(),
           naziv: Yup.string().required(),
-          adresa: Yup.string().required(),
+          drzava: Yup.string().required(),
+          grad: Yup.string().required(),
+          postanski_broj: Yup.string().required(),
+          ulica_broj: Yup.string().required(),
           pib: Yup.string()
             .required()
             .matches(/^[0-9]+$/, 'Must be only digits')
@@ -145,7 +151,19 @@ const CorpSignup: React.FC = () => {
                   <InputTextField name="naziv" label="Naziv" />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputTextField name="adresa" label="Adresa" />
+                  <InputTextField name="drzava" label="Drzava" />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputTextField name="grad" label="Grad" />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputTextField
+                    name="postanski_broj"
+                    label="Postanski broj"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputTextField name="ulica_broj" label="Ulica i Broj" />
                 </Grid>
                 <Grid item xs={12}>
                   <InputTextField name="pib" label="PIB" />

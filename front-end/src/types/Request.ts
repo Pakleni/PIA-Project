@@ -7,7 +7,10 @@ export interface IRequest {
   telefon: string;
   email: string;
   naziv: string;
-  adresa: string;
   pib: string;
   maticni_broj: string;
+  drzava: string;
+  grad: string;
+  postanski_broj: string;
+  ulica_broj: string;
 }

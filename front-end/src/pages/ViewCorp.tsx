@@ -68,7 +68,10 @@ const ViewCorp: React.FC<ViewCorpProps> = ({ user }) => {
             Osnivac: {user.ime} {user.prezime}
           </Typography>
           <Typography>+381 {user.telefon}</Typography>
-          <Typography>Adresa: {user.adresa}</Typography>
+          <Typography>Drzava: {user.drzava}</Typography>
+          <Typography>Grad: {user.grad}</Typography>
+          <Typography>Postanski Broj: {user.postanski_broj}</Typography>
+          <Typography>Ulica: {user.ulica_broj}</Typography>
           <Typography>Email: {user.email}</Typography>
           <Typography>Kategorija: {user.kategorija}</Typography>
           <Typography>Maticni broj: {user.maticni_broj}</Typography>

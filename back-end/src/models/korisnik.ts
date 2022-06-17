@@ -27,7 +27,10 @@ interface IKorisnik {
   telefon?: string;
   email?: string;
   naziv?: string;
-  adresa?: string;
+  drzava?: string;
+  grad?: string;
+  postanski_broj?: string;
+  ulica_broj?: string;
   pib?: string;
   maticni_broj?: string;
   kategorija?: string;
@@ -64,7 +67,10 @@ const korisnikSchema = new Schema<IKorisnik>({
   telefon: { type: String, sparse: true },
   email: { type: String, sparse: true, unique: true },
   naziv: { type: String, sparse: true },
-  adresa: { type: String, sparse: true },
+  drzava: { type: String, sparse: true },
+  grad: { type: String, sparse: true },
+  postanski_broj: { type: String, sparse: true },
+  ulica_broj: { type: String, sparse: true },
   pib: { type: String, sparse: true },
   maticni_broj: { type: String, sparse: true },
   kategorija: { type: String, sparse: true },

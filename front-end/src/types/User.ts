@@ -17,7 +17,10 @@ export interface Company extends BaseUser {
   telefon: string;
   email: string;
   naziv: string;
-  adresa: string;
+  drzava: string;
+  grad: string;
+  postanski_broj: string;
+  ulica_broj: string;
   pib: string;
   maticni_broj: string;
   kategorija: string;

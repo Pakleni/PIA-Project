@@ -1,4 +1,4 @@
-import MaterialTable from '@material-table/core';
+import MaterialTable, { Column } from '@material-table/core';
 import { Container } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getRequests, RequestRespond } from '../api/request';
@@ -11,12 +11,11 @@ const Requests: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const columns = [
+  const columns: Column<IRequest>[] = [
     { field: 'naziv', title: 'Company name' },
     { field: 'pib', title: 'PIB' },
     { field: 'email', title: 'Email' },
     { field: 'maticni_broj', title: 'Registration number' },
-    { field: 'adresa', title: 'Address' },
     { field: 'username', title: 'Username' }
   ];
 
