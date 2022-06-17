@@ -67,7 +67,8 @@ export class ArtikalController {
     try {
       const { user, _id, data: got_data } = req.body;
       const parsed_data = JSON.parse(got_data);
-      let data;
+      let data: any;
+
       if (!req.files || Object.keys(req.files).length === 0) {
         data = parsed_data;
       } else {
@@ -89,6 +90,13 @@ export class ArtikalController {
           slicica: `http://localhost:4000/files/uploads/${_id}-${parsed_data.sifra}-${slicica.name}`,
         };
       }
+
+      //Remove falsey values
+      Object.keys(data).forEach((key) => {
+        if (!data[key]) {
+          delete data[key];
+        }
+      });
 
       await Artikal.findOneAndUpdate({ user, _id }, data);
       return res.status(200).json({ message: "success" });

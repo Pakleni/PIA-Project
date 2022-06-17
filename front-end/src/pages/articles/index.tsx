@@ -9,7 +9,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import CreateArticles from './Create';
 import EditArticles from './Edit';
 import DeleteArticles from './Delete';
-
+import ViewArticles from './View';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 interface ArticlesPageProps {
   user: User;
 }
@@ -80,6 +81,14 @@ const ArticlesPage: React.FC<ArticlesPageProps> = ({ user }) => {
             }
           },
           {
+            icon: () => <VisibilityIcon />,
+            onClick: (event, rowData) => {
+              SetDialog('view');
+              SetDialogData(rowData as IArtikal);
+              handleOpen();
+            }
+          },
+          {
             icon: () => <CloseIcon color="error" />,
             onClick: (event, rowData) => {
               SetDialog('delete');
@@ -92,6 +101,8 @@ const ArticlesPage: React.FC<ArticlesPageProps> = ({ user }) => {
       <Dialog open={open} onClose={handleClose}>
         {dialog === 'create' ? (
           <CreateArticles user={user} />
+        ) : dialog === 'view' ? (
+          dialogData && <ViewArticles article={dialogData} />
         ) : dialog === 'edit' ? (
           dialogData && <EditArticles user={user} article={dialogData} />
         ) : (
