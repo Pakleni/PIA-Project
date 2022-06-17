@@ -65,7 +65,31 @@ export class ArtikalController {
 
   edit = async (req: express.Request, res: express.Response) => {
     try {
-      const { user, _id, data } = req.body;
+      const { user, _id, data: got_data } = req.body;
+      const parsed_data = JSON.parse(got_data);
+      let data;
+      if (!req.files || Object.keys(req.files).length === 0) {
+        data = parsed_data;
+      } else {
+        const slicica = req.files.slicica as fileUpload.UploadedFile;
+
+        const upload_path = path.join(
+          __dirname,
+          `.././public/uploads/${_id}-${parsed_data.sifra}-${slicica.name}`
+        );
+
+        try {
+          await slicica.mv(upload_path);
+        } catch (e) {
+          console.log("[server] ", e);
+          return res.status(400).json({ message: "failed" });
+        }
+        data = {
+          ...parsed_data,
+          slicica: `http://localhost:4000/files/uploads/${_id}-${parsed_data.sifra}-${slicica.name}`,
+        };
+      }
+
       await Artikal.findOneAndUpdate({ user, _id }, data);
       return res.status(200).json({ message: "success" });
     } catch (e) {

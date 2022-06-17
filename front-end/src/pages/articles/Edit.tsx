@@ -107,23 +107,23 @@ const EditArticles: React.FC<EditArticlesProps> = ({ user, article }) => {
                     : Yup.string()
               }),
               Yup.object().shape({
-                poreklo: Yup.string(),
-                strani_naziv: Yup.string(),
-                barkod: Yup.string().matches(/^[0-9]+$/, 'Must be only digits'),
-                proizvodjac: Yup.string(),
-                tarifa: Yup.string(),
-                eko_taksa: Yup.boolean(),
-                akcize: Yup.boolean(),
-                min_zalihe: Yup.string().matches(
-                  /^[0-9]+$/,
-                  'Must be only digits'
-                ),
-                max_zalihe: Yup.string().matches(
-                  /^[0-9]+$/,
-                  'Must be only digits'
-                ),
-                opis: Yup.string(),
-                deklaracija: Yup.string(),
+                poreklo: Yup.string().nullable(),
+                strani_naziv: Yup.string().nullable(),
+                barkod: Yup.string()
+                  .nullable()
+                  .matches(/^[0-9]+$/, 'Must be only digits'),
+                proizvodjac: Yup.string().nullable(),
+                tarifa: Yup.string().nullable(),
+                eko_taksa: Yup.boolean().nullable(),
+                akcize: Yup.boolean().nullable(),
+                min_zalihe: Yup.string()
+                  .nullable()
+                  .matches(/^[0-9]+$/, 'Must be only digits'),
+                max_zalihe: Yup.string()
+                  .nullable()
+                  .matches(/^[0-9]+$/, 'Must be only digits'),
+                opis: Yup.string().nullable(),
+                deklaracija: Yup.string().nullable(),
                 slicica: Yup.mixed()
                   .test('type', 'Must be jpeg/png', (value) => {
                     return (
@@ -137,6 +137,7 @@ const EditArticles: React.FC<EditArticlesProps> = ({ user, article }) => {
                     'Brtween 100x100 and 300x300',
                     imageDimensionCheck(100, 100, 300, 300)
                   )
+                  .nullable()
               }),
               Yup.object().shape({
                 cene_stanje: Yup.array()
