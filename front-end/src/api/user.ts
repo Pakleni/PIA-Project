@@ -1,4 +1,4 @@
-import { User } from '../types/User';
+import { CompanyDataExternal, User } from '../types/User';
 import { getBaseUrl } from './utils';
 
 export const login = async (
@@ -94,6 +94,19 @@ export const change_password = async (
   if (!response.ok) {
     const body = await response.json();
     throw body.message;
+  }
+};
+
+export const get_corps = async (): Promise<CompanyDataExternal[]> => {
+  const response = await fetch(getBaseUrl() + '/korisnik/corp', {
+    method: 'GET'
+  });
+
+  const body = await response.json();
+  if (!response.ok) {
+    throw body.message;
+  } else {
+    return body;
   }
 };
 

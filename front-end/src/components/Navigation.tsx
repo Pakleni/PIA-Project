@@ -31,7 +31,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const userPages: {
     label: string;
     link: string;
@@ -41,7 +40,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
       link: '/change-password'
     },
     {
-      label: 'Bills',
+      label: 'Artilki',
+      link: '/articles'
+    },
+    {
+      label: 'Racuni',
       link: '/bills'
     }
   ];

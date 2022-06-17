@@ -41,4 +41,15 @@ export interface Company extends BaseUser {
   grb: string;
 }
 
+export interface CompanyDataExternal {
+  _id: string;
+  naziv: string;
+  magacini: {
+    id: string;
+    naziv: string;
+  }[];
+  pib: string;
+  grb: string;
+}
+
 export type User = BaseUser & Buyer & Company;

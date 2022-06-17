@@ -18,6 +18,23 @@ export class KorisnikController {
       return res.status(400).json({ message: "failed" });
     }
   };
+  get_corps = async (req: express.Request, res: express.Response) => {
+    try {
+      const korisnici = await Korisnik.find({ type: "Company" });
+      return res.status(200).json(
+        korisnici.map((x) => ({
+          _id: x._id,
+          naziv: x.naziv,
+          magacini: x.magacini,
+          pib: x.pib,
+          grb: x.grb,
+        }))
+      );
+    } catch (e) {
+      console.log("[server] " + e);
+      return res.status(400).json({ message: "failed" });
+    }
+  };
   user_signup = async (req: express.Request, res: express.Response) => {
     try {
       const { user, data } = req.body;

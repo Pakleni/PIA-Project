@@ -18,7 +18,6 @@ import InputTextField from '../components/form-comps/InputTextField';
 import CloseIcon from '@mui/icons-material/Close';
 import { User } from '../types/User';
 import { add_corp_info } from '../api/user';
-import { useHistory } from 'react-router-dom';
 
 const initialValues = {
   kategorija: '',
@@ -54,8 +53,6 @@ interface CorpAddInfoProps {
   Login: () => Promise<void>;
 }
 const CorpAddInfo: React.FC<CorpAddInfoProps> = ({ user, Login }) => {
-  const history = useHistory();
-
   const [message, setMessage] = useState({
     error: false,
     message: ''
@@ -86,7 +83,6 @@ const CorpAddInfo: React.FC<CorpAddInfoProps> = ({ user, Login }) => {
         message: 'Success!'
       });
       await Login();
-      history.push('/');
     } catch (e) {
       setMessage({
         error: true,

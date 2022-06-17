@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Redirect,
   Route,
   RouteProps,
   Switch,
@@ -27,6 +28,7 @@ import ArticlesPage from './pages/articles';
 import BillsPage from './pages/bills';
 import UserBillsPage from './pages/bills/UserBillsPage';
 import ViewCorp from './pages/ViewCorp';
+import UserArticlesPage from './pages/UserArticlesPage';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -43,17 +45,9 @@ const App: React.FC = () => {
     const storageUser = localStorage.getItem('user');
     if (storageUser) {
       const { username, password } = JSON.parse(storageUser);
-
       try {
         const response = await login(username, password);
         setUser(response);
-        history.push(
-          response.type === 'Admin'
-            ? '/requests'
-            : response.type === 'Buyer'
-            ? '/bills'
-            : '/articles'
-        );
       } catch (e) {
         localStorage.removeItem('user');
         setUser(undefined);
@@ -138,6 +132,11 @@ const App: React.FC = () => {
   const buyerPages: RouteProps[] = [
     {
       exact: true,
+      path: '/articles',
+      component: () => <UserArticlesPage />
+    },
+    {
+      exact: true,
       path: '/bills',
       component: () => <UserBillsPage user={user as User} />
     }
@@ -177,6 +176,13 @@ const App: React.FC = () => {
         <CssBaseline />
         <NavigationBar Logout={Logout} user={user} />
         <Switch>
+          {user && (
+            <Redirect
+              path="/"
+              exact
+              to={user.type === 'Admin' ? '/requests' : '/articles'}
+            />
+          )}
           {pages.map((x, i) => (
             <Route key={i} {...x} />
           ))}

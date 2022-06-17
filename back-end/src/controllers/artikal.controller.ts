@@ -8,9 +8,11 @@ export class ArtikalController {
   get = async (req: express.Request, res: express.Response) => {
     try {
       const { _id } = req.query;
-      const artikli = await Artikal.find({
-        user: _id,
-      });
+      const artikli = _id
+        ? await Artikal.find({
+            user: _id,
+          })
+        : await Artikal.find({});
       return res.status(200).json(artikli);
     } catch (e) {
       console.log("[server] " + e);

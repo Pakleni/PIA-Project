@@ -11,7 +11,6 @@ import {
   Typography
 } from '@mui/material';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
 import { User } from '../types/User';
 import { validatePassword } from '../utils/yup-helpers';
 
@@ -38,7 +37,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ user, Logout }) => {
     repeat_password: ''
   };
 
-  const history = useHistory();
   const onSubmit = async ({
     username,
     password,
@@ -52,7 +50,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ user, Logout }) => {
         message: 'Success!'
       });
       Logout();
-      history.push('/');
     } catch (e) {
       setMessage({
         error: true,

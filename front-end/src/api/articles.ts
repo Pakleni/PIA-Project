@@ -1,13 +1,16 @@
 import { IArtikal } from '../types/Article';
 import { getBaseUrl } from './utils';
 
-export const getArticles = async (_id: string): Promise<IArtikal[]> => {
-  const response = await fetch(getBaseUrl() + `/artikal/?_id=${_id}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
+export const getArticles = async (_id?: string): Promise<IArtikal[]> => {
+  const response = await fetch(
+    getBaseUrl() + (_id ? `/artikal/?_id=${_id}` : '/artikal/'),
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }
-  });
+  );
 
   if (response.ok) {
     const body = await response.json();

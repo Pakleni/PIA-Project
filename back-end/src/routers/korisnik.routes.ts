@@ -26,4 +26,9 @@ korinsikRouter
 korinsikRouter
   .route("/corp")
   .post((req, res) => new KorisnikController().edit_corp(req, res));
+
+korinsikRouter
+  .route("/corp")
+  .get((req, res) => new KorisnikController().get_corps(req, res));
+
 export default korinsikRouter;
