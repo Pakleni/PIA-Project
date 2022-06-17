@@ -50,6 +50,10 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
     link: string;
   }[] = [
     {
+      label: 'Podaci o Preduzecu',
+      link: '/info'
+    },
+    {
       label: 'Robe i Usluge',
       link: '/articles'
     },

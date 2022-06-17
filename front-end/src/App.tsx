@@ -26,6 +26,7 @@ import CorpAddInfo from './pages/CorpAddInfo';
 import ArticlesPage from './pages/articles';
 import BillsPage from './pages/bills';
 import UserBillsPage from './pages/bills/UserBillsPage';
+import ViewCorp from './pages/ViewCorp';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -126,6 +127,11 @@ const App: React.FC = () => {
       exact: true,
       path: '/new-bill',
       component: () => <BillsPage user={user as User} />
+    },
+    {
+      exact: true,
+      path: '/info',
+      component: () => <ViewCorp user={user as User} />
     }
   ];
 

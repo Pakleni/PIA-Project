@@ -35,6 +35,7 @@ export interface Company extends BaseUser {
     lokacija: string;
     tip: string;
   }[];
+  grb: string;
 }
 
 export type User = BaseUser & Buyer & Company;
