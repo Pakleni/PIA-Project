@@ -31,6 +31,7 @@ interface IArtikal {
   deklaracija?: string;
   cene_stanje: ICeneStanje[];
   slicica: string;
+  kategorija: string;
 }
 
 const ceneStanjeSchema = new Schema<ICeneStanje>({
@@ -62,6 +63,7 @@ const artikalSchema = new Schema<IArtikal>({
   deklaracija: { type: String, sparse: true },
   cene_stanje: { type: [ceneStanjeSchema], required: true },
   slicica: { type: String, required: true },
+  kategorija: { type: String, sparse: true },
 });
 
 export default mongoose.model<IArtikal>("Artikal", artikalSchema, "artikli");

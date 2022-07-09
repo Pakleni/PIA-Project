@@ -58,7 +58,7 @@ export class ArtikalController {
           ...data,
         }).save();
         return res.status(200).json({ message: "success" });
-      } else return res.status(200).json({ message: "user failed" });
+      } else return res.status(400).json({ message: "user failed" });
     } catch (e) {
       console.log("[server] " + e);
       return res.status(400).json({ message: "failed" });
@@ -116,6 +116,29 @@ export class ArtikalController {
       } else {
         return res.status(400).json({ message: "no exist" });
       }
+    } catch (e) {
+      console.log("[server] " + e);
+      return res.status(400).json({ message: "failed" });
+    }
+  };
+
+  dodeli = async (req: express.Request, res: express.Response) => {
+    try {
+      const { user, _id, kategorija } = req.body;
+
+      const artikal = await Artikal.findOne({ user, _id });
+
+      if (!artikal) {
+        return res.status(400).json({ message: "no such article" });
+      }
+
+      if (!artikal.kategorija) {
+        await Artikal.findOneAndUpdate({ user, _id }, { kategorija });
+      } else {
+        return res.status(400).json({ message: "vec ima kategoriju" });
+      }
+
+      return res.status(200).json({ message: "success" });
     } catch (e) {
       console.log("[server] " + e);
       return res.status(400).json({ message: "failed" });

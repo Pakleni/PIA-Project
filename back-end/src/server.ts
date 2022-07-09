@@ -8,6 +8,7 @@ import artikalRouter from "./routers/artikal.routes";
 import racunRouter from "./routers/racun.routes";
 import predracunRouter from "./routers/predracun.routes";
 import fileUpload from "express-fileupload";
+import kategorijaRouter from "./routers/kategorija.routes";
 
 const app = express();
 app.use(cors());
@@ -43,6 +44,7 @@ router.use("/zahtev", zahtevRouter);
 router.use("/artikal", artikalRouter);
 router.use("/racun", racunRouter);
 router.use("/predracun", predracunRouter);
+router.use("/kategorije", kategorijaRouter);
 
 app.use("/", router);
 app.listen(4000, () =>

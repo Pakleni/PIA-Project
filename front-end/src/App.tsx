@@ -29,6 +29,7 @@ import BillsPage from './pages/bills';
 import UserBillsPage from './pages/bills/UserBillsPage';
 import ViewCorp from './pages/ViewCorp';
 import UserArticlesPage from './pages/UserArticlesPage';
+import CategoriesPage from './pages/Categories';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -126,6 +127,11 @@ const App: React.FC = () => {
       exact: true,
       path: '/info',
       component: () => <ViewCorp user={user as User} />
+    },
+    {
+      exact: true,
+      path: '/categories',
+      component: () => <CategoriesPage user={user as User} />
     }
   ];
 

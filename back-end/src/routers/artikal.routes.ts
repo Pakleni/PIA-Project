@@ -19,4 +19,8 @@ artikalRouter
   .route("/")
   .delete((req, res) => new ArtikalController().delete(req, res));
 
+artikalRouter
+  .route("/dodeli")
+  .post((req, res) => new ArtikalController().dodeli(req, res));
+
 export default artikalRouter;
