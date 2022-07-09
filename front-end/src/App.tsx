@@ -30,6 +30,7 @@ import UserBillsPage from './pages/bills/UserBillsPage';
 import ViewCorp from './pages/ViewCorp';
 import UserArticlesPage from './pages/UserArticlesPage';
 import CategoriesPage from './pages/Categories';
+import AdminReports from './pages/AdminReports';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -88,11 +89,10 @@ const App: React.FC = () => {
       path: '/requests',
       component: Requests
     },
-
     {
       exact: true,
-      path: '/categories',
-      component: Page404
+      path: '/reports',
+      component: AdminReports
     }
   ];
 
@@ -132,6 +132,11 @@ const App: React.FC = () => {
       exact: true,
       path: '/categories',
       component: () => <CategoriesPage user={user as User} />
+    },
+    {
+      exact: true,
+      path: '/reports',
+      component: Page404
     }
   ];
 

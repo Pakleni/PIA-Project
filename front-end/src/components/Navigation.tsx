@@ -78,19 +78,23 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
     link: string;
   }[] = [
     {
-      label: 'Corporation Signup',
+      label: 'Registracija Preduzeca',
       link: '/corp/signup'
     },
     {
-      label: 'User Signup',
+      label: 'Registracija Kupca',
       link: '/user/signup'
     },
     {
-      label: 'Requests',
+      label: 'Zahtevi',
       link: '/requests'
     },
     {
-      label: 'Change Password',
+      label: 'Izvestaji',
+      link: '/reports'
+    },
+    {
+      label: 'Promena Sifre',
       link: '/change-password'
     }
   ];
