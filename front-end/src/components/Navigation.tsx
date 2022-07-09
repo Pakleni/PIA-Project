@@ -103,6 +103,10 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
     link: string;
   }[] = [
     {
+      label: 'Login',
+      link: '/'
+    },
+    {
       label: 'Signup',
       link: '/corp/signup'
     }
