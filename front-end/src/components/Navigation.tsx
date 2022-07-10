@@ -53,15 +53,19 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
     link: string;
   }[] = [
     {
-      label: 'Podaci o Preduzecu',
+      label: 'Podaci',
       link: '/info'
+    },
+    {
+      label: 'Narucioci',
+      link: '/beneficiaries'
     },
     {
       label: 'Robe i Usluge',
       link: '/articles'
     },
     {
-      label: 'Raspored Artikala',
+      label: 'Raspored artikala',
       link: '/categories'
     },
     {
@@ -69,7 +73,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
       link: '/new-bill'
     },
     {
-      label: 'Pregled Izvestaja',
+      label: 'Izvestaji',
       link: '/reports'
     },
     {

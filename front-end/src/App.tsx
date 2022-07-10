@@ -32,6 +32,7 @@ import UserArticlesPage from './pages/UserArticlesPage';
 import CategoriesPage from './pages/Categories';
 import AdminReports from './pages/AdminReports';
 import CorporationReports from './pages/CorporationReports';
+import Beneficiaries from './pages/Beneficiaries';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -138,6 +139,11 @@ const App: React.FC = () => {
       exact: true,
       path: '/reports',
       component: () => <CorporationReports user={user as User} />
+    },
+    {
+      exact: true,
+      path: '/beneficiaries',
+      component: () => <Beneficiaries user={user as User} />
     }
   ];
 
