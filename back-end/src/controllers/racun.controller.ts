@@ -4,7 +4,13 @@ import Korisnik from "../models/korisnik";
 
 export class RacunController {
   get = async (req: express.Request, res: express.Response) => {
+    const { _id } = req.query;
     try {
+      if (_id) {
+        const racuni = await Racun.find({ firma: _id });
+        return res.status(200).json(racuni);
+      }
+
       const racuni = await Racun.find();
       return res.status(200).json(racuni);
     } catch (e) {

@@ -31,6 +31,7 @@ import ViewCorp from './pages/ViewCorp';
 import UserArticlesPage from './pages/UserArticlesPage';
 import CategoriesPage from './pages/Categories';
 import AdminReports from './pages/AdminReports';
+import CorporationReports from './pages/CorporationReports';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -136,7 +137,7 @@ const App: React.FC = () => {
     {
       exact: true,
       path: '/reports',
-      component: Page404
+      component: () => <CorporationReports user={user as User} />
     }
   ];
 

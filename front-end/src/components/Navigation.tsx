@@ -69,6 +69,10 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ Logout, user }) => {
       link: '/new-bill'
     },
     {
+      label: 'Pregled Izvestaja',
+      link: '/reports'
+    },
+    {
       label: 'Change Password',
       link: '/change-password'
     }

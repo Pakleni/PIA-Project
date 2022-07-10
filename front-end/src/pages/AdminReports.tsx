@@ -34,7 +34,7 @@ const AdminReports: React.FC = () => {
 
   return (
     <Container>
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h1">Izvestaji</Typography>
         </Grid>
@@ -98,7 +98,7 @@ const AdminReports: React.FC = () => {
                 (y) =>
                   y.firma === x._id &&
                   y.datum >= datumOd.getTime() &&
-                  y.datum <= datumDo.getTime() + 24 * 60 * 60 * 1000
+                  y.datum < datumDo.getTime() + 24 * 60 * 60 * 1000
               );
 
               const iznos = mybills.reduce((a, b) => a + get_price(b), 0);
