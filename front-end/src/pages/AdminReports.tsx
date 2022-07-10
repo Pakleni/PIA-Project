@@ -29,6 +29,9 @@ const AdminReports: React.FC = () => {
   const [datumOd, setDatumOd] = React.useState<Date | null>(null);
   const [datumDo, setDatumDo] = React.useState<Date | null>(null);
 
+  const [naziv, setNaziv] = React.useState('');
+  const [pib, setPib] = React.useState('');
+
   return (
     <Container>
       <Grid container>
@@ -38,7 +41,7 @@ const AdminReports: React.FC = () => {
         <Grid item xs={12}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              maxDate={datumDo}
+              maxDate={datumDo || new Date()}
               label="Od"
               value={datumOd}
               onChange={(newValue) => {
@@ -50,6 +53,7 @@ const AdminReports: React.FC = () => {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               minDate={datumOd}
+              maxDate={new Date()}
               label="Do"
               value={datumDo}
               onChange={(newValue) => {
@@ -58,46 +62,60 @@ const AdminReports: React.FC = () => {
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
+          <TextField
+            label="naziv"
+            value={naziv}
+            onChange={(event) => setNaziv(event.target.value)}
+          />
+          <TextField
+            label="pib"
+            value={pib}
+            onChange={(event) => setPib(event.target.value)}
+          />
         </Grid>
       </Grid>
       {datumOd && datumDo && (
         <MaterialTable
-          title={'Articles Table'}
+          title={'Reports Table'}
           columns={[
             {
               title: 'GRB',
               render: (rowData) => (
                 <img width="50" height="50" src={rowData.grb} />
-              ),
-              searchable: false
+              )
             },
             { title: 'Naziv', field: 'naziv' },
             { title: 'PIB', field: 'pib' },
-            { title: 'Iznos', field: 'iznos', searchable: false },
-            { title: 'PDV', field: 'pdv', searchable: false }
+            { title: 'Iznos', field: 'iznos' },
+            { title: 'PDV', field: 'pdv' }
           ]}
-          data={data.map((x) => {
-            const mybills = bills.filter(
-              (y) =>
-                y.firma === x._id &&
-                y.datum >= datumOd.getTime() &&
-                y.datum <= datumDo.getTime() + 24 * 60 * 60 * 1000
-            );
+          data={data
+            .filter(
+              (x) => (!naziv || naziv === x.naziv) && (!pib || pib === x.pib)
+            )
+            .map((x) => {
+              const mybills = bills.filter(
+                (y) =>
+                  y.firma === x._id &&
+                  y.datum >= datumOd.getTime() &&
+                  y.datum <= datumDo.getTime() + 24 * 60 * 60 * 1000
+              );
 
-            const iznos = mybills.reduce((a, b) => a + get_price(b), 0);
+              const iznos = mybills.reduce((a, b) => a + get_price(b), 0);
 
-            const porez = parseInt(mybills[0]?.stavke[0]?.porez) || 0;
+              const porez = parseInt(mybills[0]?.stavke[0]?.porez) || 0;
 
-            const pdv = (iznos / (1 + porez / 100)) * (porez / 100);
+              const pdv = (iznos / (1 + porez / 100)) * (porez / 100);
 
-            return {
-              ...x,
-              iznos: iznos.toLocaleString(),
-              pdv: pdv.toLocaleString()
-            };
-          })}
+              return {
+                ...x,
+                iznos: iznos.toLocaleString(),
+                pdv: pdv.toLocaleString()
+              };
+            })}
           isLoading={loading}
           options={{
+            search: false,
             actionsColumnIndex: -1
           }}
         />
