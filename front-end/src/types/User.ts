@@ -39,6 +39,17 @@ export interface Company extends BaseUser {
     tip: string;
   }[];
   grb: string;
+  odeljenja: {
+    naziv: string;
+    stolovi: {
+      id: string;
+      okrugao: boolean;
+      vis: string;
+      sir: string;
+      x: string;
+      y: string;
+    }[];
+  }[];
 }
 
 export interface CompanyDataExternal {

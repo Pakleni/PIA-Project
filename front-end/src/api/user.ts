@@ -180,3 +180,52 @@ export const add_corp_info = async (
     throw body.message;
   }
 };
+
+export const add_odeljenje = async (
+  user: User,
+  naziv: string
+): Promise<void> => {
+  const i = user.odeljenja.length * 2;
+
+  const response = await fetch(getBaseUrl() + '/korisnik/corp', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      _id: user._id,
+      data: {
+        ...user,
+        odeljenja: [
+          ...user.odeljenja,
+          {
+            naziv,
+            stolovi: [
+              {
+                id: 'sto' + i.toString(),
+                okrugao: false,
+                vis: 10,
+                sir: 10,
+                x: 5,
+                y: 5
+              },
+              {
+                id: 'sto' + (i + 1).toString(),
+                okrugao: true,
+                vis: 10,
+                sir: 10,
+                x: 5,
+                y: 5
+              }
+            ]
+          }
+        ]
+      }
+    })
+  });
+
+  if (!response.ok) {
+    const body = await response.json();
+    throw body.message;
+  }
+};

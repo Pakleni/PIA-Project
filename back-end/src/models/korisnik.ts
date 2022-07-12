@@ -17,6 +17,20 @@ interface IKasa {
   tip: string;
 }
 
+interface Sto {
+  id: string;
+  okrugao: boolean;
+  vis: number;
+  sir: number;
+  x: number;
+  y: number;
+}
+
+interface IOdeljenje {
+  naziv: string;
+  stolovi: Sto[];
+}
+
 interface IKorisnik {
   username: string;
   password: string;
@@ -40,7 +54,22 @@ interface IKorisnik {
   magacini?: IMagacin[];
   kase?: IKasa[];
   grb: string;
+  odeljenja: IOdeljenje[];
 }
+
+const stoSchema = new Schema<Sto>({
+  id: { type: String, required: true },
+  okrugao: { type: Boolean, required: true },
+  vis: { type: Number, required: true },
+  sir: { type: Number, required: true },
+  x: { type: Number, required: true },
+  y: { type: Number, required: true },
+});
+
+const odeljenjeSchema = new Schema<IOdeljenje>({
+  naziv: { type: String, required: true },
+  stolovi: { type: [stoSchema], required: true },
+});
 
 const magacinSchema = new Schema<IMagacin>({
   id: { type: String, required: true },
@@ -80,6 +109,7 @@ const korisnikSchema = new Schema<IKorisnik>({
   magacini: { type: [magacinSchema], sparse: true },
   kase: { type: [kasaSchema], sparse: true },
   grb: { type: String, sparse: true },
+  odeljenja: { type: [odeljenjeSchema], sparse: true },
 });
 
 export default mongoose.model<IKorisnik>(

@@ -33,6 +33,7 @@ import CategoriesPage from './pages/Categories';
 import AdminReports from './pages/AdminReports';
 import CorporationReports from './pages/CorporationReports';
 import Beneficiaries from './pages/Beneficiaries';
+import TablesPage from './pages/tables';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -102,7 +103,7 @@ const App: React.FC = () => {
     {
       exact: true,
       path: '/tables',
-      component: Page404
+      component: () => <TablesPage user={user as User} Login={Login} />
     }
   ];
 

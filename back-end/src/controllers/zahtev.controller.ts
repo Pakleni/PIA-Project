@@ -50,6 +50,7 @@ export class ZahtevController {
                   maticni_broj: zahtev.maticni_broj,
                   grb: zahtev.grb,
                   type: "Company",
+                  odeljenja: [],
                 }).save();
 
                 response = {
