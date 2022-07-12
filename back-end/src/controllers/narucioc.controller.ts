@@ -17,7 +17,7 @@ export class NaruciocController {
 
   getAll = async (req: express.Request, res: express.Response) => {
     try {
-      const corps = await Korisnik.find();
+      const corps = await Korisnik.find({ type: "Company" });
       const nars = await Narucioc.find();
 
       const corpsMapped = corps.map((x) => ({

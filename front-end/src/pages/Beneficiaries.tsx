@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import InputTextField from '../components/form-comps/InputTextField';
 import {
+  Autocomplete,
   Box,
   Button,
   CircularProgress,
   Container,
   Grid,
+  TextField,
   Typography
 } from '@mui/material';
 import * as Yup from 'yup';
@@ -74,6 +76,14 @@ const Beneficiaries: React.FC<BeneficiariesProps> = ({ user }) => {
     }
   };
 
+  const [autocompleteValue, setAutocompleteValue] = React.useState<
+    (INarucioc & { key: number }) | null
+  >(null);
+  const [autocompleteInputValue, setAutocompleteInputValue] =
+    React.useState('');
+
+  const disabled = !!autocompleteValue;
+
   return (
     <Box p={4} width={'100%'}>
       <Formik
@@ -104,7 +114,7 @@ const Beneficiaries: React.FC<BeneficiariesProps> = ({ user }) => {
           procenat_rabata: Yup.string().required()
         })}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setValues, values }) => (
           <Form>
             <Container maxWidth="sm">
               <Grid container spacing={2}>
@@ -112,44 +122,127 @@ const Beneficiaries: React.FC<BeneficiariesProps> = ({ user }) => {
                   <Typography variant="h3">Register Corporation</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputTextField name="ime" label="Ime" />
+                  <Autocomplete
+                    value={autocompleteValue}
+                    onChange={(event, newValue) => {
+                      setAutocompleteValue(newValue);
+
+                      if (newValue) {
+                        setValues(
+                          {
+                            ime: newValue.ime || '',
+                            prezime: newValue.prezime || '',
+                            telefon: newValue.telefon || '',
+                            email: newValue.email || '',
+                            naziv: newValue.naziv || '',
+                            drzava: newValue.drzava || '',
+                            grad: newValue.grad || '',
+                            postanski_broj: newValue.postanski_broj || '',
+                            ulica_broj: newValue.ulica_broj || '',
+                            pib: newValue.pib || '',
+                            maticni_broj: newValue.maticni_broj || '',
+                            broj_dana: values.broj_dana,
+                            procenat_rabata: values.procenat_rabata
+                          },
+                          true
+                        );
+                      }
+                    }}
+                    inputValue={autocompleteInputValue}
+                    onInputChange={(event, newInputValue) => {
+                      setAutocompleteInputValue(newInputValue);
+                    }}
+                    isOptionEqualToValue={(option, value) =>
+                      value.key === option?.key
+                    }
+                    options={beneficiaries.map((x, i) => ({
+                      key: i,
+                      ...x
+                    }))}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Pretrazi PIB" />
+                    )}
+                    getOptionLabel={(option) => option.pib}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.key}>
+                        <Typography>{option.naziv}</Typography>
+                        <br />
+                        <Typography color="textSecondary">
+                          {option.pib}
+                        </Typography>
+                      </li>
+                    )}
+                  />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputTextField name="prezime" label="Prezime" />
+                  <InputTextField name="ime" label="Ime" disabled={disabled} />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputTextField
+                    name="prezime"
+                    label="Prezime"
+                    disabled={disabled}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <InputTextField
                     name="telefon"
                     label="Telefon"
                     startAdornment="+381"
+                    disabled={disabled}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputTextField name="email" label="Email" />
+                  <InputTextField
+                    name="email"
+                    label="Email"
+                    disabled={disabled}
+                  />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputTextField name="naziv" label="Naziv" />
+                  <InputTextField
+                    name="naziv"
+                    label="Naziv"
+                    disabled={disabled}
+                  />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputTextField name="drzava" label="Drzava" />
+                  <InputTextField
+                    name="drzava"
+                    label="Drzava"
+                    disabled={disabled}
+                  />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputTextField name="grad" label="Grad" />
+                  <InputTextField
+                    name="grad"
+                    label="Grad"
+                    disabled={disabled}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <InputTextField
                     name="postanski_broj"
                     label="Postanski broj"
+                    disabled={disabled}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputTextField name="ulica_broj" label="Ulica i Broj" />
+                  <InputTextField
+                    name="ulica_broj"
+                    label="Ulica i Broj"
+                    disabled={disabled}
+                  />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputTextField name="pib" label="PIB" />
+                  <InputTextField name="pib" label="PIB" disabled={disabled} />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputTextField name="maticni_broj" label="Maticni broj" />
+                  <InputTextField
+                    name="maticni_broj"
+                    label="Maticni broj"
+                    disabled={disabled}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <InputTextField
