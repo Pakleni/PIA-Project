@@ -1,12 +1,15 @@
 import { Grid } from '@mui/material';
 import { useFormikContext } from 'formik';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { get_beneficiaries } from '../../../api/beneficiaries';
 import InputTextField from '../../../components/form-comps/InputTextField';
 import SelectField from '../../../components/form-comps/SelectField';
+import { INarucioc } from '../../../types/Beneficiary';
 import { Bill, BillItem } from '../../../types/Bill';
+import { User } from '../../../types/User';
 import { get_price } from '../../../utils/bills';
 
-const Payment: React.FC = () => {
+const Payment: React.FC<{ user: User }> = ({ user }) => {
   const { values, setFieldValue } = useFormikContext<
     {
       selected_article: string;
@@ -25,6 +28,19 @@ const Payment: React.FC = () => {
     setFieldValue('prezime', '');
     setFieldValue('narucioc', '');
   }, [nacin]);
+
+  const [beneficiaries, setBeneficiaries] = useState<INarucioc[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const Refresh = async () => {
+    setLoading(true);
+    setBeneficiaries(await get_beneficiaries(user._id));
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    Refresh();
+  }, []);
 
   const cost = get_price(values);
   return (
@@ -80,7 +96,14 @@ const Payment: React.FC = () => {
       )}
       {nacin === 'virman' && (
         <Grid item xs={12}>
-          <InputTextField name="narucioc" label="narucioc" />
+          <SelectField
+            name="narucioc"
+            label="narucioc"
+            data={beneficiaries.map((x) => ({
+              value: x.pib,
+              label: x.naziv + ' - ' + x.pib
+            }))}
+          />
         </Grid>
       )}
       {nacin === 'gotovina' && values.vrednost && values.vrednost >= cost && (

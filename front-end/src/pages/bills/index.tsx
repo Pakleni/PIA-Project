@@ -30,7 +30,8 @@ const initialValues = {
   prezime: '',
   narucioc: '',
   stavke: [],
-  selected_article: ''
+  selected_article: '',
+  magacin_id: ''
 };
 
 const initialError = {
@@ -124,7 +125,7 @@ const BillsPage: React.FC<BillsPageProps> = ({ user }) => {
                   <Grid item xs={12}>
                     <Typography variant="h4">Payment:</Typography>
                   </Grid>
-                  <Payment />
+                  <Payment user={user} />
                 </Grid>
                 <Grid item xs={12}>
                   <Button

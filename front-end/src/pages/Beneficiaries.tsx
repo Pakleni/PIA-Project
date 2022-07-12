@@ -110,8 +110,8 @@ const Beneficiaries: React.FC<BeneficiariesProps> = ({ user }) => {
             .min(9, '9 digits')
             .max(9, '9 digits'),
           maticni_broj: Yup.string().required(),
-          broj_dana: Yup.string().required(),
-          procenat_rabata: Yup.string().required()
+          broj_dana: Yup.number().required(),
+          procenat_rabata: Yup.number().required()
         })}
       >
         {({ isSubmitting, setValues, values }) => (
