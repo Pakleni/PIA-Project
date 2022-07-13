@@ -9,7 +9,7 @@ export class ZahtevController {
       const { username, password } = req.query;
       const korisnik = await Korisnik.findOne({ username, password });
       if (korisnik) {
-        const zahtevi = await Zahtev.find();
+        const zahtevi = await Zahtev.find({ status: "aktivan" });
         return res.status(200).json(zahtevi);
       } else return res.sendStatus(401);
     } catch (e) {
@@ -32,8 +32,11 @@ export class ZahtevController {
             };
             await session.withTransaction(async () => {
               const zahtev = await Zahtev.findByIdAndDelete(_id);
-
               if (zahtev) {
+                if (zahtev.status === "neaktivan") {
+                  return res.status(400).json({ message: "Zahtev neaktivan" });
+                }
+
                 await new Korisnik({
                   username: zahtev.username,
                   password: zahtev.password,
@@ -68,7 +71,9 @@ export class ZahtevController {
             await session.endSession();
           }
         } else {
-          const zahtev = await Zahtev.findByIdAndDelete(_id);
+          const zahtev = await Zahtev.findOneAndUpdate(_id, {
+            status: "neaktivan",
+          });
           if (zahtev) {
             return res.status(200).json({ message: "success" });
           } else {

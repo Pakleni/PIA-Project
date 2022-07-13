@@ -10,6 +10,7 @@ import {
 import FrontPage from './pages/FrontPage';
 import Page404 from './pages/404';
 import {
+  Box,
   createTheme,
   CssBaseline,
   responsiveFontSizes,
@@ -34,6 +35,7 @@ import AdminReports from './pages/AdminReports';
 import CorporationReports from './pages/CorporationReports';
 import Beneficiaries from './pages/Beneficiaries';
 import TablesPage from './pages/tables';
+import Footer from './components/Footer';
 
 const theme = responsiveFontSizes(createTheme({}));
 
@@ -192,20 +194,23 @@ const App: React.FC = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <NavigationBar Logout={Logout} user={user} />
-        <Switch>
-          {user && (
-            <Redirect
-              path="/"
-              exact
-              to={user.type === 'Admin' ? '/requests' : '/articles'}
-            />
-          )}
-          {pages.map((x, i) => (
-            <Route key={i} {...x} />
-          ))}
-        </Switch>
+        <Box sx={{ minHeight: 'calc(100vh - 50px)' }}>
+          <CssBaseline />
+          <NavigationBar Logout={Logout} user={user} />
+          <Switch>
+            {user && (
+              <Redirect
+                path="/"
+                exact
+                to={user.type === 'Admin' ? '/requests' : '/articles'}
+              />
+            )}
+            {pages.map((x, i) => (
+              <Route key={i} {...x} />
+            ))}
+          </Switch>
+        </Box>
+        <Footer />
       </ThemeProvider>
     </>
   );

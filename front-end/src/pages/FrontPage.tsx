@@ -71,7 +71,9 @@ const FrontPage: React.FC<FrontPageProps> = ({ setUser }) => {
             <Container maxWidth="xs">
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Typography variant="h3">Login</Typography>
+                  <Typography variant="h3" align="center">
+                    Login
+                  </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <InputTextField name="username" label="Username" />
@@ -84,7 +86,12 @@ const FrontPage: React.FC<FrontPageProps> = ({ setUser }) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button disabled={isSubmitting} type="submit">
+                  <Button
+                    disabled={isSubmitting}
+                    type="submit"
+                    variant="contained"
+                    sx={{ ml: 'auto', mr: 'auto', display: 'block' }}
+                  >
                     {isSubmitting ? <CircularProgress /> : 'Submit'}
                   </Button>
                 </Grid>
@@ -95,36 +102,36 @@ const FrontPage: React.FC<FrontPageProps> = ({ setUser }) => {
                     </Typography>
                   </Grid>
                 )}
-              </Grid>
-              <>
                 {data.map((x, i) => (
-                  <Card key={i}>
-                    <CardContent>
-                      <Typography
-                        color="text.secondary"
-                        gutterBottom
-                        variant="h6"
-                      >
-                        {x.firma} [{x.amount} din]
-                        {x.stavke.length && (
-                          <>
-                            <br />
-                            Porez: {x.stavke[0].porez}
-                          </>
-                        )}
-                      </Typography>
-                      <Typography variant="body2">
-                        {x.stavke.map((y) => (
-                          <>
-                            • {y.kolicina} x {y.naziv_artikla}
-                            <br />
-                          </>
-                        ))}
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                  <Grid item xs={12} key={i}>
+                    <Card>
+                      <CardContent>
+                        <Typography
+                          color="text.secondary"
+                          gutterBottom
+                          variant="h6"
+                        >
+                          {x.firma} [{x.amount} din]
+                          {x.stavke.length && (
+                            <>
+                              <br />
+                              Porez: {x.stavke[0].porez}
+                            </>
+                          )}
+                        </Typography>
+                        <Typography variant="body2">
+                          {x.stavke.map((y) => (
+                            <>
+                              • {y.kolicina} x {y.naziv_artikla}
+                              <br />
+                            </>
+                          ))}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
                 ))}
-              </>
+              </Grid>
             </Container>
           </Form>
         )}

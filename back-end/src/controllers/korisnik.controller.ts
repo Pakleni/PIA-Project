@@ -123,7 +123,10 @@ export class KorisnikController {
                 message: "Email already exists!",
               };
             } else {
-              await new Zahtev(data).save();
+              await new Zahtev({
+                ...data,
+                status: "aktivan",
+              }).save();
               response = {
                 status: 200,
                 message: "Success!",

@@ -61,6 +61,12 @@ const UserArticlesPage: React.FC = () => {
                 title={`Artikli firme ${rowData.rowData.naziv}`}
                 data={data.filter((x) => x.user === rowData.rowData._id)}
                 columns={[
+                  {
+                    title: 'GRB',
+                    render: (rowData) => (
+                      <img width="50" height="50" src={rowData.slicica} />
+                    )
+                  },
                   { title: 'Naziv', field: 'naziv' },
                   { title: 'Proizvodjac', field: 'proizvodjac' },
                   { title: 'Min Cena', field: 'min_cena' },

@@ -17,11 +17,13 @@ interface IZahtev {
   postanski_broj?: string;
   ulica_broj?: string;
   grb: string;
+  status: string;
 }
 
 const zahtevSchema = new Schema<IZahtev>({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  status: { type: String, required: true },
   ime: { type: String, sparse: true },
   prezime: { type: String, sparse: true },
   telefon: { type: String, sparse: true },

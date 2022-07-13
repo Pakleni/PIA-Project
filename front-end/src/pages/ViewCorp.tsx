@@ -1,7 +1,16 @@
-import { Box, Container, Tab, Tabs, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Tab,
+  Tabs,
+  TextField,
+  Typography
+} from '@mui/material';
 import React from 'react';
 import { Company } from '../types/User';
-
+import AddIcon from '@mui/icons-material/Add';
 interface ViewCorpProps {
   user: Company;
 }
@@ -63,39 +72,126 @@ const ViewCorp: React.FC<ViewCorpProps> = ({ user }) => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Typography>{user.naziv}</Typography>
-          <Typography>
-            Osnivac: {user.ime} {user.prezime}
-          </Typography>
-          <Typography>+381 {user.telefon}</Typography>
-          <Typography>Drzava: {user.drzava}</Typography>
-          <Typography>Grad: {user.grad}</Typography>
-          <Typography>Postanski Broj: {user.postanski_broj}</Typography>
-          <Typography>Ulica: {user.ulica_broj}</Typography>
-          <Typography>Email: {user.email}</Typography>
-          <Typography>Kategorija: {user.kategorija}</Typography>
-          <Typography>Maticni broj: {user.maticni_broj}</Typography>
-          <Typography>PIB: {user.pib}</Typography>
-          <Typography>PDV: {user.pdv ? 'Da' : 'Ne'}</Typography>
-          <Typography>
-            Sifra Delatnosti: {user.sifra_delatnosti.join(', ')}
-          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Naziv" value={user.naziv} disabled />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Osnivac Ime"
+                value={user.ime}
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Osnivac Prezime"
+                value={user.prezime}
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Telefon"
+                value={user.telefon}
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Drzava"
+                value={user.drzava}
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Grad" value={user.grad} disabled />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Postanski Broj"
+                value={user.postanski_broj}
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Ulica"
+                value={user.ulica_broj}
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Email" value={user.email} disabled />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Kategorija"
+                value={user.kategorija}
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Maticni broj"
+                value={user.maticni_broj}
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label="PIB" value={user.pib} disabled />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="PDV"
+                value={user.pdv ? 'Da' : 'Ne'}
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Sifra Delatnosti"
+                value={user.sifra_delatnosti.join(', ')}
+                disabled
+              />
+            </Grid>
+          </Grid>
         </TabPanel>
         <TabPanel value={value} index={1}>
           {user.racuni.map((x, i) => (
-            <Box key={i} p={1} m={1} border="1px solid">
-              <Typography>Broj: {x.broj}</Typography>
-              <Typography>Banka: {x.banka}</Typography>
+            <Box key={i} p={1} m={1}>
+              <TextField label="Broj" value={x.broj} disabled />
+              <TextField label="Banka" value={x.banka} disabled />
             </Box>
           ))}
+          <Box p={1} m={1}>
+            <Button disabled variant="outlined">
+              <AddIcon />
+            </Button>
+          </Box>
         </TabPanel>
         <TabPanel value={value} index={2}>
           {user.magacini.map((x, i) => (
-            <Box key={i} p={1} m={1} border="1px solid">
-              <Typography>Id: {x.id}</Typography>
-              <Typography>Naziv: {x.naziv}</Typography>
+            <Box key={i} p={1} m={1}>
+              <TextField label="Id" value={x.id} disabled />
+              <TextField label="Naziv" value={x.naziv} disabled />
             </Box>
           ))}
+          <Box p={1} m={1}>
+            <Button disabled variant="outlined">
+              <AddIcon />
+            </Button>
+          </Box>
         </TabPanel>
       </Box>
     </Container>
