@@ -12,6 +12,7 @@ import { get_predracun } from '../../api/predracun';
 import { IPredracun } from '../../types/PreBill';
 import { User } from '../../types/User';
 import AddOdeljak from './AddOdeljak';
+import CloseRacun from './CloseRacun';
 import StoRacun from './StoRacun';
 
 interface TablesPageProps {
@@ -77,6 +78,7 @@ const TablesPage: React.FC<TablesPageProps> = ({ user, Login }) => {
 
   const handleClose = () => {
     setOpen(false);
+    Refresh();
   };
 
   const Refresh = async () => {
@@ -98,6 +100,7 @@ const TablesPage: React.FC<TablesPageProps> = ({ user, Login }) => {
     setValue(newValue);
   };
 
+  const prebill = prebills.find((z) => z.sto === dialogData?.id);
   return (
     <Container>
       <Typography variant="h1">Stolovi</Typography>
@@ -190,14 +193,17 @@ const TablesPage: React.FC<TablesPageProps> = ({ user, Login }) => {
             }}
           />
         ) : dialog === 'zatvori' ? (
-          <AddOdeljak
-            user={user}
-            onClose={() => {
-              handleClose();
-              Refresh();
-              Login();
-            }}
-          />
+          prebill && (
+            <CloseRacun
+              user={user}
+              prebill={prebill}
+              onClose={() => {
+                handleClose();
+                Refresh();
+                Login();
+              }}
+            />
+          )
         ) : (
           dialogData && (
             <StoRacun
@@ -206,7 +212,6 @@ const TablesPage: React.FC<TablesPageProps> = ({ user, Login }) => {
               prebills={prebills}
               onClose={() => {
                 handleClose();
-                Refresh();
               }}
             />
           )

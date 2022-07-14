@@ -41,7 +41,7 @@ const AdminSignup: React.FC = () => {
     } catch (e) {
       setMessage({
         error: true,
-        message: e as string
+        message: JSON.parse(e as string)?.message as string
       });
     }
   };

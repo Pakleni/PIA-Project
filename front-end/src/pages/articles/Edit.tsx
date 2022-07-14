@@ -48,7 +48,26 @@ const EditArticles: React.FC<EditArticlesProps> = ({ user, article }) => {
     max_zalihe: article.max_zalihe,
     opis: article.opis,
     deklaracija: article.deklaracija,
-    cene_stanje: article.cene_stanje,
+    cene_stanje: [
+      ...article.cene_stanje,
+      ...(user.magacini
+        .filter((x) => !article.cene_stanje.find((y) => y.magacin_id === x.id))
+        .map((x) => ({
+          magacin_id: x.id,
+          nabavna_cena: '',
+          prodajna_cena: '',
+          stanje: '',
+          min_zalihe: '',
+          max_zalihe: ''
+        })) as {
+        magacin_id: string;
+        nabavna_cena: string;
+        prodajna_cena: string;
+        stanje: string;
+        min_zalihe: string;
+        max_zalihe: string;
+      }[])
+    ],
     slicica: null
   };
   const steps = ['General Info', 'Added Info', 'Prices and States'];
@@ -60,6 +79,7 @@ const EditArticles: React.FC<EditArticlesProps> = ({ user, article }) => {
     message: ''
   });
 
+  console.log(initialValues.cene_stanje);
   const onSubmit = async (data: typeof initialValues) => {
     if (step != 2) {
       setStep(step + 1);
@@ -76,7 +96,7 @@ const EditArticles: React.FC<EditArticlesProps> = ({ user, article }) => {
     } catch (e) {
       setMessage({
         error: true,
-        message: e as string
+        message: JSON.parse(e as string)?.message as string
       });
     }
   };

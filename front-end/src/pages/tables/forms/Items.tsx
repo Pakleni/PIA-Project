@@ -63,7 +63,7 @@ const Items: React.FC<ItemsProps> = ({ user, zauzet }) => {
   }, [selected_mag, selected_article]);
 
   useEffect(() => {
-    setFieldValue('stavke', []);
+    !zauzet && setFieldValue('stavke', []);
   }, [selected_mag]);
 
   const onClick = () => {

@@ -53,7 +53,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ user, Logout }) => {
     } catch (e) {
       setMessage({
         error: true,
-        message: e as string
+        message: JSON.parse(e as string)?.message as string
       });
     }
   };

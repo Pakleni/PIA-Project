@@ -48,3 +48,20 @@ export const put_predracun = async (
     throw await response.text();
   }
 };
+
+export const close_predracun = async (
+  _id: string,
+  racun_id: string,
+  data: IPredracun
+): Promise<void> => {
+  const response = await fetch(getBaseUrl() + `/predracun`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ _id, racun_id, data })
+  });
+  if (!response.ok) {
+    throw await response.text();
+  }
+};

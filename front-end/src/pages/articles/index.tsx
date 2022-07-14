@@ -30,6 +30,7 @@ const ArticlesPage: React.FC<ArticlesPageProps> = ({ user }) => {
 
   const handleClose = () => {
     setOpen(false);
+    Refresh();
   };
 
   const Refresh = async () => {
@@ -48,6 +49,12 @@ const ArticlesPage: React.FC<ArticlesPageProps> = ({ user }) => {
       <MaterialTable
         title={'Articles Table'}
         columns={[
+          {
+            title: 'Slika',
+            render: (rowData) => (
+              <img width="50" height="50" src={rowData.slicica} />
+            )
+          },
           { title: 'Sifra', field: 'sifra' },
           { title: 'Naziv', field: 'naziv' },
           { title: 'Jedinica Mere', field: 'jedinica' },

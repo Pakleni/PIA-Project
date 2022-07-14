@@ -15,4 +15,8 @@ predracunRouter
   .route("/")
   .put((req, res) => new PredracunController().edit(req, res));
 
+predracunRouter
+  .route("/")
+  .delete((req, res) => new PredracunController().close(req, res));
+
 export default predracunRouter;

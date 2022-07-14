@@ -62,7 +62,7 @@ const UserArticlesPage: React.FC = () => {
                 data={data.filter((x) => x.user === rowData.rowData._id)}
                 columns={[
                   {
-                    title: 'GRB',
+                    title: 'Slika',
                     render: (rowData) => (
                       <img width="50" height="50" src={rowData.slicica} />
                     )

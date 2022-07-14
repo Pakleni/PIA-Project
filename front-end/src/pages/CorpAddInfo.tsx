@@ -86,7 +86,7 @@ const CorpAddInfo: React.FC<CorpAddInfoProps> = ({ user, Login }) => {
     } catch (e) {
       setMessage({
         error: true,
-        message: e as string
+        message: JSON.parse(e as string)?.message as string
       });
     }
   };

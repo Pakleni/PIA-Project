@@ -12,35 +12,23 @@ import { User } from '../../types/User';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import Payment from './forms/Payment';
-import Items from './forms/Items';
-import { new_bill } from '../../api/bill';
 import { Bill } from '../../types/Bill';
 import { get_price } from '../../utils/bills';
+import { IPredracun } from '../../types/PreBill';
+import { close_predracun } from '../../api/predracun';
 
 interface BillsPageProps {
   user: User;
+  prebill: IPredracun;
+  onClose: () => void;
 }
-
-const initialValues = {
-  nacin: '',
-  vrednost: '',
-  broj_lk: '',
-  broj_slip_racuna: '',
-  ime: '',
-  prezime: '',
-  narucioc: '',
-  sifra: '',
-  stavke: [],
-  selected_article: '',
-  magacin_id: ''
-};
 
 const initialError = {
   error: false,
   message: ''
 };
 
-const BillsPage: React.FC<BillsPageProps> = ({ user }) => {
+const CloseRacun: React.FC<BillsPageProps> = ({ user, prebill, onClose }) => {
   const [message, setMessage] = useState({
     error: false,
     message: ''
@@ -49,18 +37,35 @@ const BillsPage: React.FC<BillsPageProps> = ({ user }) => {
   const onSubmit = async (data: typeof initialValues) => {
     setMessage(initialError);
     try {
-      await new_bill(user._id, data as unknown as Bill);
+      await close_predracun(
+        user._id,
+        prebill._id,
+        data as unknown as IPredracun
+      );
       data;
       setMessage({
         error: false,
         message: 'Success!'
       });
+
+      onClose();
     } catch (e) {
       setMessage({
         error: true,
         message: JSON.parse(e as string)?.message as string
       });
     }
+  };
+
+  const initialValues = {
+    ...prebill,
+    nacin: '',
+    vrednost: '',
+    broj_lk: '',
+    broj_slip_racuna: '',
+    ime: '',
+    prezime: '',
+    narucioc: ''
   };
 
   return (
@@ -102,33 +107,21 @@ const BillsPage: React.FC<BillsPageProps> = ({ user }) => {
               narucioc: Yup.string().when(['nacin'], (nacin: string) => {
                 if (nacin === 'virman') return Yup.string().required();
                 else return Yup.string();
-              }),
-              stavke: Yup.array()
-                .of(
-                  Yup.object().shape({
-                    sifra: Yup.string(),
-                    naziv_artikla: Yup.string(),
-                    magacin_id: Yup.string(),
-                    kolicina: Yup.string(),
-                    prodajna_cena: Yup.string(),
-                    porez: Yup.string()
-                  })
-                )
-                .required(),
-              selected_article: Yup.string(),
-              selected_mag: Yup.string(),
-              kolicina: Yup.string().matches(/^[0-9]+$/, 'Must be only digits')
+              })
             })}
           >
             {({ values, isSubmitting }) => (
               <Form>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <Typography variant="h4">Items:</Typography>
-                  </Grid>
-                  <Items user={user} />
-                  <Grid item xs={12}>
                     <Typography variant="h4">Payment:</Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="h6">
+                      Total Price:{' '}
+                      {get_price(prebill as unknown as Bill).toLocaleString()}
+                      din
+                    </Typography>
                   </Grid>
                   <Payment user={user} />
                 </Grid>
@@ -161,4 +154,4 @@ const BillsPage: React.FC<BillsPageProps> = ({ user }) => {
     </Container>
   );
 };
-export default BillsPage;
+export default CloseRacun;

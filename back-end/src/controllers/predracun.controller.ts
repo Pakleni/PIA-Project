@@ -57,7 +57,7 @@ export class PredracunController {
     try {
       const { _id, racun_id, data } = req.body;
 
-      const predracun = await Predracun.findByIdAndDelete(racun_id);
+      const predracun = await Predracun.findById(racun_id);
 
       if (predracun) {
         await new Racun({
@@ -66,6 +66,9 @@ export class PredracunController {
           ...data,
           datum: Date.now(),
         }).save();
+
+        await Predracun.findByIdAndDelete(racun_id);
+
         return res.status(200).json({ message: "success" });
       } else {
         return res.status(400).json({ message: "failed to find racun" });
