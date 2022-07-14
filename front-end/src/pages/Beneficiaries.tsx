@@ -47,7 +47,9 @@ const Beneficiaries: React.FC<BeneficiariesProps> = ({ user }) => {
 
   const Refresh = async () => {
     setLoading(true);
-    setBeneficiaries(await get_all_beneficiaries());
+    setBeneficiaries(
+      (await get_all_beneficiaries()).filter((x) => x.pib !== user.pib)
+    );
     setLoading(false);
   };
 
@@ -119,7 +121,7 @@ const Beneficiaries: React.FC<BeneficiariesProps> = ({ user }) => {
             <Container maxWidth="sm">
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Typography variant="h3">Register Corporation</Typography>
+                  <Typography variant="h3">Narucioci</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Autocomplete

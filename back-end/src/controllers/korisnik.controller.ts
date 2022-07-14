@@ -35,7 +35,10 @@ export class KorisnikController {
       return res.status(400).json({ message: "failed" });
     }
   };
-  user_signup = async (req: express.Request, res: express.Response) => {
+  user_signup = async (
+    req: express.Request,
+    res: express.Response
+  ): Promise<express.Response> => {
     try {
       const { user, data } = req.body;
 
@@ -59,9 +62,14 @@ export class KorisnikController {
       return res.status(400).json({ message: "failed" });
     }
   };
-  corp_signup = async (req: express.Request, res: express.Response) => {
+  corp_signup = async (
+    req: express.Request,
+    res: express.Response
+  ): Promise<express.Response> => {
     try {
-      const { user, data: got_data } = req.body;
+      const { user: got_user, data: got_data } = req.body;
+
+      const user = got_user ? JSON.parse(got_user) : undefined;
 
       if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send("No files were uploaded.");

@@ -14,6 +14,7 @@ export interface Bill {
 }
 
 export interface BillItem {
+  sifra: string;
   naziv_artikla: string;
   kolicina: number;
   prodajna_cena: number;

@@ -29,6 +29,7 @@ const initialValues = {
   ime: '',
   prezime: '',
   narucioc: '',
+  sifra: '',
   stavke: [],
   selected_article: '',
   magacin_id: ''
@@ -102,6 +103,7 @@ const BillsPage: React.FC<BillsPageProps> = ({ user }) => {
               stavke: Yup.array()
                 .of(
                   Yup.object().shape({
+                    sifra: Yup.string(),
                     naziv_artikla: Yup.string(),
                     magacin_id: Yup.string(),
                     kolicina: Yup.string(),

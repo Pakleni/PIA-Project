@@ -159,6 +159,19 @@ const TablesPage: React.FC<TablesPageProps> = ({ user, Login }) => {
                     >
                       {zauzet ? 'Dodaj na racun' : 'Otvori racun'}
                     </Button>
+                    {zauzet && (
+                      <Button
+                        variant="outlined"
+                        color={zauzet ? 'error' : 'success'}
+                        onClick={() => {
+                          SetDialogData(y);
+                          setOpen(true);
+                          SetDialog('zatvori');
+                        }}
+                      >
+                        {'Zatvori Racun'}
+                      </Button>
+                    )}
                   </div>
                 );
               })}
@@ -176,9 +189,26 @@ const TablesPage: React.FC<TablesPageProps> = ({ user, Login }) => {
               Login();
             }}
           />
+        ) : dialog === 'zatvori' ? (
+          <AddOdeljak
+            user={user}
+            onClose={() => {
+              handleClose();
+              Refresh();
+              Login();
+            }}
+          />
         ) : (
           dialogData && (
-            <StoRacun user={user} sto={dialogData} prebills={prebills} />
+            <StoRacun
+              user={user}
+              sto={dialogData}
+              prebills={prebills}
+              onClose={() => {
+                handleClose();
+                Refresh();
+              }}
+            />
           )
         )}
       </Dialog>

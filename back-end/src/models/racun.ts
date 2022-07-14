@@ -7,6 +7,7 @@ export interface IStavka {
   kolicina: number;
   prodajna_cena: number;
   porez: string;
+  sifra: string;
 }
 
 interface IRacun {
@@ -24,6 +25,7 @@ interface IRacun {
 }
 
 export const stavkaSchema = new Schema<IStavka>({
+  sifra: { type: String, required: true },
   naziv_artikla: { type: String, required: true },
   kolicina: { type: Number, required: true },
   prodajna_cena: { type: Number, required: true },

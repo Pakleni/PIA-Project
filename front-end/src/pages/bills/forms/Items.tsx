@@ -41,7 +41,7 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
   >();
 
   const selected_article = articles.find(
-    (x) => x.naziv === values['selected_article']
+    (x) => x.sifra === values['selected_article']
   );
 
   const selected_mag = user.magacini.find((x) => x.id === values.magacin_id);
@@ -53,6 +53,7 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
       );
 
       if (cena_stanje) {
+        setFieldValue('sifra', selected_article.sifra);
         setFieldValue('naziv_artikla', selected_article.naziv);
         setFieldValue('prodajna_cena', cena_stanje.prodajna_cena);
         setFieldValue('porez', selected_article.stopa);
@@ -66,6 +67,7 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
 
   const onClick = () => {
     const {
+      sifra,
       naziv_artikla,
       magacin_id,
       kolicina,
@@ -77,6 +79,7 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
     setFieldValue('stavke', [
       ...stavke,
       {
+        sifra,
         naziv_artikla,
         magacin_id,
         kolicina,
@@ -108,16 +111,21 @@ const Items: React.FC<ItemsProps> = ({ user }) => {
           <SelectField
             name="selected_article"
             label="Select Article"
-            data={articles.map((x) => ({
-              label: x.naziv,
-              value: x.naziv
-            }))}
+            data={articles
+              .filter((x) => !values['stavke'].find((y) => y.sifra === x.sifra))
+              .map((x) => ({
+                label: x.naziv,
+                value: x.sifra
+              }))}
           />
         </Grid>
       )}
 
       {selected_article && (
         <>
+          <Grid item xs={12}>
+            <InputTextField name="sifra" label="sifra" disabled />
+          </Grid>
           <Grid item xs={12}>
             <InputTextField
               name="naziv_artikla"

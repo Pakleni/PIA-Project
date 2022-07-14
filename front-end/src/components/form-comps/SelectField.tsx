@@ -12,14 +12,24 @@ interface SelectFieldProps {
   name: string;
   label: string;
   data: { value: string; label: string }[];
+  disabled?: boolean;
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({ name, label, data }) => {
+const SelectField: React.FC<SelectFieldProps> = ({
+  name,
+  label,
+  data,
+  disabled
+}) => {
   const [field, meta] = useField(name);
 
   const { touched, error } = meta;
   return (
-    <FormControl fullWidth error={touched ? !!error : undefined}>
+    <FormControl
+      fullWidth
+      error={touched ? !!error : undefined}
+      disabled={disabled}
+    >
       <InputLabel>{label}</InputLabel>
       <Select {...field} fullWidth>
         {data.map((x, i) => (

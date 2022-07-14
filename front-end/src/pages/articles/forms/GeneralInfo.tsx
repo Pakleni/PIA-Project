@@ -1,4 +1,14 @@
-import { Grid } from '@mui/material';
+import {
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  Grid,
+  Radio,
+  RadioGroup
+} from '@mui/material';
+import { useField } from 'formik';
 import React from 'react';
 import InputTextField from '../../../components/form-comps/InputTextField';
 import SelectField from '../../../components/form-comps/SelectField';
@@ -9,6 +19,7 @@ interface GeneralInfoProps {
 }
 
 const GeneralInfo: React.FC<GeneralInfoProps> = ({ user }) => {
+  const [field] = useField('tip');
   return (
     <>
       <Grid item xs={12}>
@@ -40,7 +51,25 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ user }) => {
       </Grid>
       {user.kategorija === 'ugostitelj' && (
         <Grid item xs={12}>
-          <InputTextField name="tip" label="Type" />
+          <FormControl>
+            <FormLabel>Tip</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              {...field}
+            >
+              <FormControlLabel
+                value="hrana"
+                control={<Radio />}
+                label="Hrana"
+              />
+              <FormControlLabel value="pice" control={<Radio />} label="Pice" />
+              <FormControlLabel
+                value="sirovina"
+                control={<Radio />}
+                label="Sirovina"
+              />
+            </RadioGroup>
+          </FormControl>
         </Grid>
       )}
     </>

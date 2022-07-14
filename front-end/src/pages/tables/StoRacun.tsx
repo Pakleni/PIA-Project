@@ -20,6 +20,7 @@ interface StoRacunProps {
   user: User;
   sto: ISto;
   prebills: IPredracun[];
+  onClose: () => void;
 }
 
 const initialError = {
@@ -27,7 +28,12 @@ const initialError = {
   message: ''
 };
 
-const StoRacun: React.FC<StoRacunProps> = ({ user, sto, prebills }) => {
+const StoRacun: React.FC<StoRacunProps> = ({
+  user,
+  sto,
+  prebills,
+  onClose
+}) => {
   const zauzet = prebills.find((z) => z.sto === sto.id);
 
   const initialValues = zauzet
@@ -35,7 +41,10 @@ const StoRacun: React.FC<StoRacunProps> = ({ user, sto, prebills }) => {
     : {
         stavke: [],
         selected_article: '',
-        magacin_id: ''
+        selected_mag: '',
+        magacin_id: '',
+        sifra: '',
+        kolicina: ''
       };
 
   const [message, setMessage] = useState({
@@ -47,14 +56,15 @@ const StoRacun: React.FC<StoRacunProps> = ({ user, sto, prebills }) => {
     setMessage(initialError);
     try {
       await (zauzet
-        ? put_predracun(zauzet._id, { ...data, sto: sto.id })
-        : post_predracun(user._id, { ...data, sto: sto.id }));
+        ? put_predracun(zauzet._id, { ...zauzet, ...data, sto: sto.id })
+        : post_predracun(user._id, { ...data, sto: sto.id } as IPredracun));
 
       data;
       setMessage({
         error: false,
         message: 'Success!'
       });
+      onClose();
     } catch (e) {
       setMessage({
         error: true,
@@ -74,6 +84,7 @@ const StoRacun: React.FC<StoRacunProps> = ({ user, sto, prebills }) => {
               stavke: Yup.array()
                 .of(
                   Yup.object().shape({
+                    sifra: Yup.string(),
                     naziv_artikla: Yup.string(),
                     magacin_id: Yup.string(),
                     kolicina: Yup.string(),
@@ -82,6 +93,8 @@ const StoRacun: React.FC<StoRacunProps> = ({ user, sto, prebills }) => {
                   })
                 )
                 .required(),
+              sifra: Yup.string(),
+              magacin_id: Yup.string(),
               selected_article: Yup.string(),
               selected_mag: Yup.string(),
               kolicina: Yup.string().matches(/^[0-9]+$/, 'Must be only digits')

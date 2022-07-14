@@ -34,7 +34,7 @@ const CreateArticles: React.FC<CreateArticlesProps> = ({ user }) => {
     naziv: '',
     jedinica: '',
     stopa: user.pdv ? '' : '0%',
-    tip: '',
+    tip: user.kategorija === 'ugostitelj' ? 'hrana' : '',
     poreklo: '',
     strani_naziv: '',
     barkod: '',
@@ -89,7 +89,7 @@ const CreateArticles: React.FC<CreateArticlesProps> = ({ user }) => {
     } catch (e) {
       setMessage({
         error: true,
-        message: e as string
+        message: JSON.parse(e as string)?.message as string
       });
     }
   };
