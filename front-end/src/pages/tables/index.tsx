@@ -12,6 +12,7 @@ import { get_predracun } from '../../api/predracun';
 import { IPredracun } from '../../types/PreBill';
 import { User } from '../../types/User';
 import AddOdeljak from './AddOdeljak';
+import StoRacun from './StoRacun';
 
 interface TablesPageProps {
   user: User;
@@ -44,6 +45,15 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
+export interface ISto {
+  id: string;
+  okrugao: boolean;
+  vis: string;
+  sir: string;
+  x: string;
+  y: string;
+}
+
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -57,14 +67,7 @@ const TablesPage: React.FC<TablesPageProps> = ({ user, Login }) => {
   const data = user.odeljenja || [];
 
   const [dialog, SetDialog] = useState('');
-  const [dialogData, SetDialogData] = useState<{
-    id: string;
-    okrugao: boolean;
-    vis: string;
-    sir: string;
-    x: string;
-    y: string;
-  }>();
+  const [dialogData, SetDialogData] = useState<ISto>();
 
   const [prebills, SetPreBills] = useState<IPredracun[]>([]);
 
@@ -174,7 +177,9 @@ const TablesPage: React.FC<TablesPageProps> = ({ user, Login }) => {
             }}
           />
         ) : (
-          <></>
+          dialogData && (
+            <StoRacun user={user} sto={dialogData} prebills={prebills} />
+          )
         )}
       </Dialog>
     </Container>

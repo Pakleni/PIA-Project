@@ -1,8 +1,7 @@
-import { Bill } from '../types/Bill';
 import { IPredracun } from '../types/PreBill';
 import { getBaseUrl } from './utils';
 
-export const get_predracun = async (_id: string): Promise<Bill[]> => {
+export const get_predracun = async (_id: string): Promise<IPredracun[]> => {
   const response = await fetch(getBaseUrl() + `/predracun/?_id=${_id}`, {
     method: 'GET',
     headers: {
@@ -12,7 +11,7 @@ export const get_predracun = async (_id: string): Promise<Bill[]> => {
 
   if (response.ok) {
     const body = await response.json();
-    return body as Bill[];
+    return body as IPredracun[];
   } else {
     throw await response.text();
   }
@@ -22,7 +21,7 @@ export const post_predracun = async (
   _id: string, //of user
   data: IPredracun
 ): Promise<void> => {
-  const response = await fetch(getBaseUrl() + `/artikal`, {
+  const response = await fetch(getBaseUrl() + `/predracun`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -38,7 +37,7 @@ export const put_predracun = async (
   _id: string, //of article
   data: IPredracun
 ): Promise<void> => {
-  const response = await fetch(getBaseUrl() + `/artikal`, {
+  const response = await fetch(getBaseUrl() + `/predracun`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
