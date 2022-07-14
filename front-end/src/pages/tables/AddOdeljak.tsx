@@ -7,7 +7,7 @@ import { Form, Formik } from 'formik';
 import InputTextField from '../../components/form-comps/InputTextField';
 import { add_odeljenje } from '../../api/user';
 
-interface CreateCategoriesProps {
+interface AddOdeljakProps {
   user: User;
   onClose: () => void;
 }
@@ -17,10 +17,7 @@ const initialError = {
   message: ''
 };
 
-const CreateCategories: React.FC<CreateCategoriesProps> = ({
-  user,
-  onClose
-}) => {
+const AddOdeljak: React.FC<AddOdeljakProps> = ({ user, onClose }) => {
   const initialValues = {
     naziv: ''
   };
@@ -92,4 +89,4 @@ const CreateCategories: React.FC<CreateCategoriesProps> = ({
   );
 };
 
-export default CreateCategories;
+export default AddOdeljak;

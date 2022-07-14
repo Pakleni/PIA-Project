@@ -204,16 +204,16 @@ export const add_odeljenje = async (
               {
                 id: 'sto' + i.toString(),
                 okrugao: false,
-                vis: 10,
-                sir: 10,
-                x: 5,
-                y: 5
+                vis: 200,
+                sir: 475,
+                x: 450,
+                y: 450
               },
               {
                 id: 'sto' + (i + 1).toString(),
                 okrugao: true,
-                vis: 10,
-                sir: 10,
+                vis: 220,
+                sir: 220,
                 x: 5,
                 y: 5
               }
