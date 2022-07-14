@@ -18,6 +18,7 @@ import InputTextField from '../components/form-comps/InputTextField';
 import CloseIcon from '@mui/icons-material/Close';
 import { User } from '../types/User';
 import { add_corp_info } from '../api/user';
+import { useHistory } from 'react-router-dom';
 
 const initialValues = {
   kategorija: '',
@@ -58,6 +59,8 @@ const CorpAddInfo: React.FC<CorpAddInfoProps> = ({ user, Login }) => {
     message: ''
   });
 
+  const history = useHistory();
+
   const onSubmit = async (data: {
     kategorija: string;
     sifra_delatnosti: never[];
@@ -83,6 +86,7 @@ const CorpAddInfo: React.FC<CorpAddInfoProps> = ({ user, Login }) => {
         message: 'Success!'
       });
       await Login();
+      history.push('/articles');
     } catch (e) {
       setMessage({
         error: true,

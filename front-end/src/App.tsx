@@ -202,7 +202,7 @@ const App: React.FC = () => {
               <Redirect
                 path="/"
                 exact
-                to={user.type === 'Admin' ? '/requests' : '/articles'}
+                to={user.type === 'Admin' ? '/reports' : '/articles'}
               />
             )}
             {pages.map((x, i) => (
